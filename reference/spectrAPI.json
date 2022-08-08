@@ -1,5 +1,5 @@
 {
-  "openapi": "3.1.0",
+  "openapi": "3.0.0",
   "x-stoplight": {
     "id": "ot1k3p57qv7wi"
   },
@@ -36,9 +36,31 @@
       "get": {
         "summary": "Your GET endpoint",
         "tags": [],
-        "responses": {},
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
         "operationId": "get-designs-design_id-artboards-artboard_id-content",
-        "description": "Получение информации о содержимом Рабочей области"
+        "description": "Получение информации о содержимом Рабочей области",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "version": {
+                    "type": "object",
+                    "description": "Описание версий интсрументов, участвующих в созданиии длкумента Octopus. Должен обязательно содержать парметр octopus-common и один дополниетльный парметр с версией приложения"
+                  }
+                },
+                "required": [
+                  "version"
+                ]
+              }
+            }
+          }
+        }
       }
     }
   },
