@@ -64,16 +64,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "properties": {
-                  "version": {
-                    "type": "object",
-                    "description": "Описание версий интсрументов, участвующих в созданиии длкумента Octopus. Должен обязательно содержать парметр octopus-common и один дополниетльный парметр с версией приложения"
-                  }
-                },
-                "required": [
-                  "version"
-                ]
+                "type": "object"
               }
             }
           }
