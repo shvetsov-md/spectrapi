@@ -46,13 +46,47 @@
                   "properties": {
                     "version": {
                       "type": "object",
+                      "required": [
+                        "octopus-common"
+                      ],
+                      "description": "Информция о версиях инструментов, файлы которых были импортированы. Обязательно должен быть параметр octopus-common и один из дополнительных праметров с версией интструмента. Все версии возвращаются в вивде сементаческой версионности",
                       "properties": {
-                        "": {
-                          "type": "string"
+                        "octopus-common": {
+                          "type": "string",
+                          "example": "1.2.3",
+                          "description": "Версия octopus"
+                        },
+                        "octopus-sketch": {
+                          "type": "string",
+                          "example": "1.2.3",
+                          "description": "Версия инструмента sketch для адаптера octopus"
+                        },
+                        "octopus-figma": {
+                          "type": "string",
+                          "example": "1.2.3",
+                          "description": "Версия инструмента figma для адаптера octopus"
+                        },
+                        "octopus-ps": {
+                          "type": "string",
+                          "example": "1.2.3",
+                          "description": "Версия инструмента photoshop для адаптера octopus"
+                        },
+                        "octopus-xd": {
+                          "type": "string",
+                          "example": "1.2.3",
+                          "description": "Версия инструмента adobe xd для адаптера octopus"
+                        },
+                        "octopus-ai": {
+                          "type": "string",
+                          "example": "1.2.3",
+                          "description": "Версия инструмента adobe illustrator для адаптера octopus"
                         }
                       }
                     }
-                  }
+                  },
+                  "required": [
+                    "version"
+                  ]
                 }
               }
             }
@@ -64,7 +98,21 @@
           "content": {
             "application/json": {
               "schema": {
-                "type": "object"
+                "type": "object",
+                "properties": {
+                  "design_id": {
+                    "type": "string",
+                    "description": "ИД импортированного файла"
+                  },
+                  "artboard_id": {
+                    "type": "string",
+                    "description": "ИД Рабочей области в импорированном файле"
+                  }
+                },
+                "required": [
+                  "design_id",
+                  "artboard_id"
+                ]
               }
             }
           }
