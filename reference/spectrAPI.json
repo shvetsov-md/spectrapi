@@ -54,7 +54,7 @@
                         "octopus-common": {
                           "type": "string",
                           "example": "1.2.3",
-                          "description": "Версия octopus"
+                          "description": "Версия octopus\n* "
                         },
                         "octopus-sketch": {
                           "type": "string",
@@ -80,6 +80,20 @@
                           "type": "string",
                           "example": "1.2.3",
                           "description": "Версия инструмента adobe illustrator для адаптера octopus"
+                        }
+                      }
+                    },
+                    "timeStamp": {
+                      "type": "integer",
+                      "description": "Время создания документа octopus. Возвращается как в виде временной метки Unix",
+                      "example": 1621946352725
+                    },
+                    "bounds": {
+                      "type": "object",
+                      "deprecated": true,
+                      "properties": {
+                        "": {
+                          "type": "string"
                         }
                       }
                     }
@@ -121,6 +135,7 @@
     }
   },
   "components": {
-    "schemas": {}
+    "schemas": {},
+    "parameters": {}
   }
 }
