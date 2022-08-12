@@ -228,6 +228,113 @@
                           "trimTransparentPixels": {
                             "type": "boolean",
                             "description": "Флаг, обозначающий, следует ли обрезать прозрачные пиксели при экспорте:\n* true - обрезать пиксели;\n* false - не обрезать"
+                          },
+                          "background": {
+                            "type": "object",
+                            "description": "Фон экспорта",
+                            "properties": {
+                              "value": {
+                                "$ref": "#/components/schemas/color"
+                              },
+                              "enabled": {
+                                "type": "boolean",
+                                "description": "* true - если фон включен;\n* false - выключен"
+                              }
+                            }
+                          },
+                          "bounds": {
+                            "type": "object",
+                            "description": "Границы дескрипторов",
+                            "properties": {
+                              "top": {
+                                "$ref": "#/components/schemas/top"
+                              },
+                              "left": {
+                                "$ref": "#/components/schemas/left"
+                              },
+                              "bottom": {
+                                "$ref": "#/components/schemas/bottom"
+                              },
+                              "right": {
+                                "$ref": "#/components/schemas/right"
+                              },
+                              "height": {
+                                "$ref": "#/components/schemas/height"
+                              },
+                              "weight": {
+                                "$ref": "#/components/schemas/weight"
+                              }
+                            }
+                          },
+                          "limitTo": {
+                            "type": "string",
+                            "description": "Что должно быть включено в экспорт:\n* ARTBOARD - вся Рабочая область;\n* SELF - сам объект",
+                            "enum": [
+                              "ARTBOARD",
+                              "SELF"
+                            ]
+                          },
+                          "formats": {
+                            "type": "array",
+                            "description": "Массив, описывающий форматы экспорта",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "naming": {
+                                  "type": "object",
+                                  "description": "Значение префикса / суффикса названия экспорта",
+                                  "properties": {
+                                    "scheme": {
+                                      "type": "string",
+                                      "description": "Тип наименования",
+                                      "enum": [
+                                        "PREFIX",
+                                        "SUFFIX"
+                                      ]
+                                    },
+                                    "value": {
+                                      "type": "string",
+                                      "description": "Значение перфикса или суффикса"
+                                    }
+                                  }
+                                },
+                                "format": {
+                                  "type": "string",
+                                  "description": "Формат экспорта",
+                                  "enum": [
+                                    "PNG",
+                                    "JPG",
+                                    "TIFF",
+                                    "WEBP",
+                                    "PDF",
+                                    "EPS",
+                                    "SVG"
+                                  ]
+                                },
+                                "size": {
+                                  "type": "object",
+                                  "description": "Ограничение изменения размера",
+                                  "properties": {
+                                    "mode": {
+                                      "type": "string",
+                                      "enum": [
+                                        "SCALE",
+                                        "WIDTH",
+                                        "HEIGHT"
+                                      ],
+                                      "description": "Тип изменения размера результата экспорта (масштабировать или изменять размер с фиксированной шириной или высотой)"
+                                    },
+                                    "value": {
+                                      "type": "number",
+                                      "description": "Значение ограничения"
+                                    }
+                                  }
+                                }
+                              },
+                              "required": [
+                                "format"
+                              ]
+                            }
                           }
                         },
                         "required": [
