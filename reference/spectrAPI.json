@@ -342,6 +342,16 @@
                         ]
                       }
                     },
+                    "flow": {
+                      "type": "object",
+                      "description": "Взаимодействие на Рабочей области",
+                      "properties": {
+                        "initial": {
+                          "type": "boolean",
+                          "description": "Флаг, является ли Рабочая область домашней Рабочей областью для прототипа дизайна:\n* true - является;\n* false - нет"
+                        }
+                      }
+                    },
                     "smartLayout": {
                       "type": "string",
                       "deprecated": true,
