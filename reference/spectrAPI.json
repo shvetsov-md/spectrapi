@@ -152,14 +152,12 @@
                     },
                     "backgroundColor": {
                       "$ref": "#/components/schemas/color"
+                    },
+                    "hasBackgroundColor": {
+                      "type": "boolean",
+                      "description": "Флаг указывающий, нужно ли применять цвет фона, полученный из объекта backgroundColor, к Рабочей области:\n* true - применить;\n* false - не применять\n\n-- Если параметр backgroundColor не вернулся в ответе метода или вернулся пустой (null), то данный случай рассматриваеи как флаг false"
                     }
-                  },
-                  "required": [
-                    "version",
-                    "bounds",
-                    "frame",
-                    "backgroundColor"
-                  ]
+                  }
                 }
               }
             }
