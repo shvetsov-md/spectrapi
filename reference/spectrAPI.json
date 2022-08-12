@@ -120,11 +120,45 @@
                           "$ref": "#/components/schemas/weight"
                         }
                       }
+                    },
+                    "symbolID": {
+                      "type": "string",
+                      "description": "Используется в Sketch"
+                    },
+                    "frame": {
+                      "type": "object",
+                      "required": [
+                        "x",
+                        "y"
+                      ],
+                      "deprecated": true,
+                      "description": "Позиция Рабочей области\n\n--Здесь скорее всего идет речь об области выделения всех объектов на Рабочей области. Не используем, т.к. у каждого слоя и так вернется своя позиция",
+                      "properties": {
+                        "x": {
+                          "type": "number",
+                          "description": "Горизонтальное положение Рабочей области (по оси X)",
+                          "format": "float",
+                          "default": 0,
+                          "example": 9.99
+                        },
+                        "y": {
+                          "type": "number",
+                          "description": "Вертикальное положение Рабочей области (по оси Y)",
+                          "format": "float",
+                          "default": 0,
+                          "example": 9.99
+                        }
+                      }
+                    },
+                    "backgroundColor": {
+                      "$ref": "#/components/schemas/color"
                     }
                   },
                   "required": [
                     "version",
-                    "bounds"
+                    "bounds",
+                    "frame",
+                    "backgroundColor"
                   ]
                 }
               }
@@ -228,6 +262,49 @@
         "format": "float",
         "default": 0,
         "example": 9.99
+      },
+      "color": {
+        "title": "color",
+        "x-stoplight": {
+          "id": "ego30so2z2daw"
+        },
+        "type": "object",
+        "description": "Цветовой дескриптор\n\n-- Полученные значения RGB необходимо преобразовать в режим цветового кодирования HEX.\nЗначение альфа канала в проценты (a * 100)",
+        "properties": {
+          "r": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 255,
+            "description": "Цветовой канал красного цвета"
+          },
+          "g": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 255,
+            "description": "Цветовой канал зеленого цвета"
+          },
+          "b": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 255,
+            "description": "Цветовой канал синего цвета"
+          },
+          "a": {
+            "type": "number",
+            "format": "float",
+            "default": 1,
+            "example": 9.99,
+            "minimum": 0,
+            "maximum": 1,
+            "description": "Альфа канал\n\n--Для Спектра необходимо перевести полученное значение в %"
+          }
+        },
+        "required": [
+          "r",
+          "g",
+          "b",
+          "a"
+        ]
       }
     },
     "parameters": {}
