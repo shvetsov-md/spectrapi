@@ -358,7 +358,7 @@
                     },
                     "flow": {
                       "type": "object",
-                      "description": "Взаимодействие во фрейме\n\n-- Не используем",
+                      "description": "Взаимодействие между фреймами (создание прототипов)\n\n-- Пока не используем",
                       "deprecated": true,
                       "properties": {
                         "initial": {
@@ -402,14 +402,93 @@
                                 "properties": {
                                   "type": {
                                     "type": "string",
-                                    "description": "Тип анимации взимодествия"
+                                    "description": "Тип анимации взимодествия",
+                                    "enum": [
+                                      "DISSOLVE",
+                                      "MOVE_UP",
+                                      "MOVE_DOWN",
+                                      "MOVE_LEFT",
+                                      "MOVE_RIGHT",
+                                      "PUSH_UP",
+                                      "PUSH_DOWN",
+                                      "PUSH_LEFT",
+                                      "PUSH_RIGHT",
+                                      "SLIDE_UP",
+                                      "SLIDE_DOWN",
+                                      "SLIDE_LEFT",
+                                      "SLIDE_RIGHT",
+                                      "NONE"
+                                    ]
+                                  },
+                                  "easing": {
+                                    "type": "string",
+                                    "enum": [
+                                      "EASE_IN",
+                                      "EASE_OUT",
+                                      "EASE_IN_OUT",
+                                      "NON"
+                                    ],
+                                    "description": "Тип плавной анимации"
+                                  },
+                                  "duration": {
+                                    "type": "integer",
+                                    "description": "Продолжительность анимации (количество миллисекунд)"
+                                  },
+                                  "delay": {
+                                    "type": "integer",
+                                    "description": "Время задержки перед анимацией (количество миллисекунд)"
                                   }
                                 }
+                              },
+                              "bounds": {
+                                "type": "object",
+                                "description": "Границы области взаиможействия",
+                                "required": [
+                                  "top",
+                                  "left",
+                                  "weight",
+                                  "height",
+                                  "right",
+                                  "bottom"
+                                ],
+                                "properties": {
+                                  "top": {
+                                    "$ref": ""
+                                  },
+                                  "left": {
+                                    "$ref": "#/components/schemas/left"
+                                  },
+                                  "weight": {
+                                    "$ref": "#/components/schemas/weight"
+                                  },
+                                  "height": {
+                                    "$ref": "#/components/schemas/height"
+                                  },
+                                  "right": {
+                                    "$ref": "#/components/schemas/right"
+                                  },
+                                  "bottom": {
+                                    "$ref": "#/components/schemas/bottom"
+                                  }
+                                }
+                              },
+                              "preserveScroll": {
+                                "type": "boolean",
+                                "description": "Если true, то монтажная область должна сохранять текущее положение прокрутки. Иначе false"
+                              },
+                              "trigger": {
+                                "type": "string",
+                                "description": "Триггер (например, жест), который инициирует взаимодействие"
+                              },
+                              "ownerId": {
+                                "type": "string",
+                                "description": "ИД слоя, из которошо происходит взаимодействие"
                               }
                             },
                             "required": [
                               "destination",
-                              "animation"
+                              "animation",
+                              "bounds"
                             ]
                           }
                         }
