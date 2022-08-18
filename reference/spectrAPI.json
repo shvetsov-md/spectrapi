@@ -497,7 +497,7 @@
                     "smartLayout": {
                       "type": "string",
                       "deprecated": true,
-                      "description": "Умная компоновка\n-- Используется только для Sketch",
+                      "description": "Умная компоновка\n\n-- Используется только для Sketch",
                       "enum": [
                         "RIGHT_TO_LEFT",
                         "HORIZONTAL_CENTER",
@@ -506,8 +506,32 @@
                         "HORIZONTAL_CENTER",
                         "LEFT_TO_RIGHT"
                       ]
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "Наименование фрейма"
+                    },
+                    "id": {
+                      "type": "string",
+                      "description": "ИД фрейма"
+                    },
+                    "layoutGrid": {
+                      "type": "array",
+                      "description": "Компоновочная сетка",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "": {
+                            "type": "string"
+                          }
+                        }
+                      }
                     }
-                  }
+                  },
+                  "required": [
+                    "name",
+                    "id"
+                  ]
                 }
               }
             }
