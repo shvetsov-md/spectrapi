@@ -373,31 +373,26 @@
         },
         "operationId": "get-designs-design_id-artboards-artboard_id-content",
         "description": "Получение информации о содержимом Рабочей области",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "design_id": {
-                    "type": "string",
-                    "description": "ИД импортированного файла"
-                  },
-                  "artboard_id": {
-                    "type": "string",
-                    "description": "ИД Рабочей области в импорированном файле"
-                  }
-                },
-                "required": [
-                  "design_id",
-                  "artboard_id"
-                ]
-              }
-            }
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "design_id",
+            "required": true,
+            "description": "ИД импортированного файла"
           },
-          "description": ""
-        },
-        "parameters": []
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "artboard_id",
+            "required": true,
+            "description": "ИД Рабочей области в импорированном файле"
+          }
+        ]
       }
     }
   },
