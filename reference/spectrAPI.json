@@ -521,10 +521,83 @@
                       "items": {
                         "type": "object",
                         "properties": {
-                          "": {
-                            "type": "string"
+                          "type": {
+                            "type": "string",
+                            "description": "Тип сетки",
+                            "enum": [
+                              "grid",
+                              "column",
+                              "row"
+                            ]
+                          },
+                          "size": {
+                            "type": "integer",
+                            "description": "Для type = \"grid\", это расстояние между линиями сетки по горизонтали и вертикали.\nДля type = \"column\" / \"row\", это ширина линий сетки"
+                          },
+                          "thickEvery": {
+                            "type": "integer",
+                            "description": "Толщина линий сетки для type = \"grid\"\n\n-- Параметр возвращается, если type = \"grid\""
+                          },
+                          "color": {
+                            "$ref": "#/components/schemas/color"
+                          },
+                          "enabled": {
+                            "type": "boolean",
+                            "description": "Флаг, отвечающий за видимость сетки:\n* true - сетку нужно показывать;\n* false - сетка должна быть скрыта"
+                          },
+                          "count": {
+                            "type": "integer",
+                            "description": "Количество линий сетки, для type = \"column\" / \"row\"\n\n-- Параметр возвращается только для type = \"column\" / \"row\"\n-- Если в фигма установлено значение \"auto\", то в параметре возвращается \"0\""
+                          },
+                          "drawEveryLine": {
+                            "type": "boolean",
+                            "description": "Флаг, нужно отрисовывать все линии. Возвращается только для type = \"raw\"\n\n-- Не используем. Для фигмы всегда false",
+                            "deprecated": true
+                          },
+                          "outerOutline": {
+                            "type": "boolean",
+                            "description": "Флаг, нужно отрисовывать внешние линии. Возвращается только для type = \"column\"\n\n-- Не используем. Для фигмы всегда false",
+                            "deprecated": true
+                          },
+                          "bounds": {
+                            "type": "object",
+                            "description": "Границы сетки. Объект возвращается только для type = \"column\" / \"raw\"",
+                            "properties": {
+                              "top": {
+                                "$ref": "#/components/schemas/top"
+                              },
+                              "left": {
+                                "$ref": "#/components/schemas/left"
+                              },
+                              "weight": {
+                                "$ref": "#/components/schemas/weight"
+                              },
+                              "height": {
+                                "$ref": "#/components/schemas/height"
+                              },
+                              "bottom": {
+                                "$ref": "#/components/schemas/bottom"
+                              },
+                              "right": {
+                                "$ref": "#/components/schemas/right"
+                              }
+                            },
+                            "required": [
+                              "top",
+                              "left",
+                              "weight",
+                              "height",
+                              "bottom",
+                              "right"
+                            ]
                           }
-                        }
+                        },
+                        "required": [
+                          "type",
+                          "size",
+                          "color",
+                          "enabled"
+                        ]
                       }
                     }
                   },
