@@ -357,7 +357,7 @@
                     },
                     "flow": {
                       "type": "object",
-                      "description": "Взаимодействие между фреймами (создание прототипов)\n\n-- Пока не используем. Для 2-го этапа",
+                      "description": "Взаимодействие между фреймами (создание прототипов). Для фигмы реализовано частично\n\n-- Пока не используем. Для 2-го этапа",
                       "deprecated": true,
                       "properties": {
                         "initial": {
@@ -366,7 +366,7 @@
                         },
                         "interactions": {
                           "type": "array",
-                          "description": "Массив взаимодествий фреймов. Не пустой, если initial: true",
+                          "description": "Массив взаимодествий фреймов",
                           "items": {
                             "type": "object",
                             "properties": {
@@ -481,7 +481,7 @@
                               },
                               "ownerId": {
                                 "type": "string",
-                                "description": "ИД слоя, из которошо происходит взаимодействие"
+                                "description": "ИД слоя, из которого происходит взаимодействие"
                               }
                             },
                             "required": [
@@ -531,11 +531,14 @@
                           },
                           "size": {
                             "type": "number",
-                            "description": "Для type = \"grid\", это расстояние между линиями сетки по горизонтали и вертикали.\nДля type = \"column\" / \"row\", это ширина линий сетки"
+                            "description": "Для type = \"grid\", это расстояние между линиями сетки по горизонтали и вертикали.\nДля type = \"column\" / \"row\", это ширина линий сетки",
+                            "format": "float",
+                            "example": 9.99,
+                            "default": 0
                           },
                           "thickEvery": {
                             "type": "number",
-                            "description": "Толщина линий сетки для type = \"grid\"\n\n-- Параметр возвращается, если type = \"grid\""
+                            "description": "Толщина линий сетки, для type = \"grid\"\n\n-- Параметр возвращается, если type = \"grid\""
                           },
                           "color": {
                             "$ref": "#/components/schemas/color"
@@ -545,7 +548,7 @@
                             "description": "Флаг, отвечающий за видимость сетки:\n* true - сетку нужно показывать;\n* false - сетка должна быть скрыта"
                           },
                           "count": {
-                            "type": "integer",
+                            "type": "number",
                             "description": "Количество линий сетки, для type = \"column\" / \"row\"\n\n-- Параметр возвращается только для type = \"column\" / \"row\"\n-- Если в фигма установлено значение \"auto\", то в параметре возвращается \"0\""
                           },
                           "drawEveryLine": {
