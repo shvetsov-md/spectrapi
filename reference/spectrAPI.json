@@ -601,11 +601,19 @@
                           "enabled"
                         ]
                       }
+                    },
+                    "layers": {
+                      "type": "array",
+                      "description": "Слои фрейма",
+                      "items": {
+                        "type": "object"
+                      }
                     }
                   },
                   "required": [
                     "name",
-                    "id"
+                    "id",
+                    "layers"
                   ]
                 }
               }
