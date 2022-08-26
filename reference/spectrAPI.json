@@ -606,7 +606,11 @@
                       "type": "array",
                       "description": "Слои фрейма",
                       "items": {
-                        "type": "object"
+                        "oneOf": [
+                          {
+                            "$ref": ""
+                          }
+                        ]
                       }
                     }
                   },
@@ -756,6 +760,197 @@
           "b",
           "a"
         ]
+      },
+      "shapeLayer": {
+        "title": "shapeLayer",
+        "x-stoplight": {
+          "id": "3n8ojlyr1iy3o"
+        },
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "shapeLayer"
+            ],
+            "description": "Форма слоя"
+          }
+        },
+        "required": [
+          "type"
+        ],
+        "description": "Описание слоя вектороной формы"
+      },
+      "layerBase": {
+        "title": "layerBase",
+        "x-stoplight": {
+          "id": "vf3nbwzn5q7qh"
+        },
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "ИД слоя",
+            "example": "3:3"
+          },
+          "name": {
+            "type": "string",
+            "description": "Наименование слоя"
+          },
+          "origin": {
+            "type": "string",
+            "description": "Инструмент, в котором был создан слой",
+            "enum": [
+              "sketch",
+              "xd",
+              "photoshop",
+              "figma",
+              "illustrator"
+            ]
+          },
+          "visible": {
+            "type": "boolean",
+            "default": true,
+            "description": "Флаг видимости слоя на Рабочей области:\n* true - слой виден (возвращается по умолчанию);\n* false - слой скрыт"
+          },
+          "bounds": {
+            "type": "object",
+            "description": "Границы слоя (без эффектов)",
+            "properties": {
+              "top": {
+                "$ref": "#/components/schemas/top"
+              },
+              "left": {
+                "$ref": "#/components/schemas/left"
+              },
+              "weight": {
+                "$ref": "#/components/schemas/weight"
+              },
+              "height": {
+                "$ref": "#/components/schemas/height"
+              },
+              "right": {
+                "$ref": "#/components/schemas/right"
+              },
+              "bottom": {
+                "$ref": "#/components/schemas/bottom"
+              }
+            },
+            "required": [
+              "top",
+              "left",
+              "weight",
+              "height",
+              "right",
+              "bottom"
+            ]
+          },
+          "shape": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id"
+        ],
+        "description": "Общее описание слоя"
+      },
+      "shape": {
+        "title": "shape",
+        "x-stoplight": {
+          "id": "wad056xttdasi"
+        },
+        "type": "object",
+        "description": "Дескриптор формы",
+        "properties": {
+          "paths": {
+            "type": "string"
+          },
+          "enabled": {
+            "type": "boolean",
+            "default": true,
+            "description": "Если форма является векторной маской, то данный флаг указывает, включена маска или нет:\n* true - маска включена (по умолчанию);\n* false - выключена\n\n-- Не используется для слоев фигмы",
+            "deprecated": true
+          },
+          "windingRule": {
+            "type": "string",
+            "enum": [
+              "on-zero",
+              "even-odd"
+            ],
+            "default": "even-odd",
+            "description": "Правила взаимодействия контуров объектов, которые пересекаются:\n* non-zero: заливка по правилу ненулевого направления;\n* even-odd: заливка по правилу четности и нечетности\n\n-- Можно не использовать. Для фигмы всегда возвращается одно из доступных значений данного параметра: \"non-zero\"",
+            "deprecated": true
+          }
+        },
+        "required": [
+          "paths"
+        ]
+      },
+      "shapePath": {
+        "title": "shapePath",
+        "x-stoplight": {
+          "id": "c2bn6x5k7w4p1"
+        },
+        "type": "array",
+        "description": "Описение единого вектороного пути",
+        "items": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": [
+                "rect",
+                "ellipse",
+                "path"
+              ],
+              "description": "Тип формы, которую представляет векторный путь. Если пустой, то форма неизвестна для octopus\n\n-- Можно не использовать. Для фигмы в данном параметре приходит одно из доступных значени: \"path\"",
+              "deprecated": true
+            },
+            "booleanOperation": {
+              "type": "string",
+              "description": "Логичечкая операция, объединяющая текущий и следующий путь в массиве\n\n-- Можно не использовать. Для в данном параметре всегда возвращается значение: \"none\" (по умолчанию)",
+              "enum": [
+                "none",
+                "exclusion",
+                "intersection",
+                "subtraction",
+                "union"
+              ],
+              "default": "none",
+              "deprecated": true
+            },
+            "subpaths": {
+              "type": "string",
+              "description": "Массив подпутей (контуров), из которых состоит основной путь"
+            }
+          },
+          "required": [
+            "subpaths"
+          ]
+        }
+      },
+      "shapeSubpath": {
+        "title": "shapeSubpath",
+        "x-stoplight": {
+          "id": "pok4gdtm9bp3q"
+        },
+        "type": "object",
+        "description": "Дескриптор одного контура",
+        "properties": {
+          "closed": {
+            "type": "boolean",
+            "description": "Флаг, указывающий открыт или закрыт путь:\n* true - путь закрыт;\n* false - путь закрыт\n\n-- Можно не использщовать. Для фигмы всегда возвращается: \"true\""
+          },
+          "points": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/shapePath"
+            }
+          }
+        }
       }
     },
     "parameters": {}
