@@ -790,6 +790,7 @@
           "id": "vf3nbwzn5q7qh"
         },
         "type": "object",
+        "description": "Общее описание слоя",
         "properties": {
           "id": {
             "type": "string",
@@ -849,13 +850,19 @@
             ]
           },
           "shape": {
+            "$ref": "#/components/schemas/shape"
+          },
+          "clipped": {
+            "type": "boolean",
+            "description": "Флаг, указывающий скрывается ли текущий слой другим слоем:\n* true: скрывается (при этом должен возвращаться параметр maskedBy)"
+          },
+          "maskedBy": {
             "type": "string"
           }
         },
         "required": [
           "id"
-        ],
-        "description": "Общее описание слоя"
+        ]
       },
       "shape": {
         "title": "shape",
