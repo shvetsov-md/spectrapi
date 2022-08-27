@@ -952,7 +952,75 @@
             "default": 1,
             "minimum": 0,
             "maximum": 1,
-            "description": "Уровень непрозрачности заливки слоя"
+            "description": "Уровень непрозрачности заливки слоя: 1 - полностью непрозрачный, 0 - полностью прозрачный. Описывает значение альфа-канала (непрозрачности)\n\n-- Не используется;\n-- Не возвращается для инструмента figma"
+          },
+          "blendMode": {
+            "type": "string",
+            "enum": [
+              "BLEND_DIVIDE",
+              "BLEND_SUBTRACTION",
+              "COLOR",
+              "COLOR_BURN",
+              "COLOR_DODGE",
+              "DARKEN",
+              "DARKER_COLOR",
+              "DIFFERENCE",
+              "DISSOLVE",
+              "EXCLUSION",
+              "HARD_LIGHT",
+              "HARD_MIX",
+              "HUE",
+              "LIGHTEN",
+              "LIGHTER_COLOR",
+              "LIGHTEN_BURN",
+              "LIGHTEN_DODGE",
+              "LIGHTEN_LIGHT",
+              "LUMINOSITY",
+              "MULTIPLY",
+              "OVERLAY",
+              "PASS_THROUGH",
+              "PIN_LIGHT",
+              "SATURATION",
+              "SCREEN",
+              "SOFT_LIGHT",
+              "VIVID_LIGHT",
+              "NORMAL"
+            ],
+            "description": "Режим наложения слоя"
+          },
+          "effects": {
+            "type": "object",
+            "description": "Дескриптор эффектов слоя",
+            "properties": {
+              "fills": {
+                "type": "object",
+                "description": "Слои заливки",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "description": "ИД заливки"
+                  },
+                  "color": {
+                    "$ref": "#/components/schemas/color"
+                  },
+                  "gradient": {
+                    "$ref": "#/components/schemas/effectAbstractGradient"
+                  }
+                },
+                "required": [
+                  "id"
+                ]
+              },
+              "shadows": {
+                "type": "string"
+              },
+              "borders": {
+                "type": "string"
+              },
+              "blurs": {
+                "type": "string"
+              }
+            }
           }
         },
         "required": [
@@ -1053,6 +1121,19 @@
             }
           }
         }
+      },
+      "effectAbstractGradient": {
+        "title": "effectAbstractGradient",
+        "x-stoplight": {
+          "id": "11otoxmgvyhkj"
+        },
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          }
+        },
+        "description": "Дескриптор градиента"
       }
     },
     "parameters": {}
