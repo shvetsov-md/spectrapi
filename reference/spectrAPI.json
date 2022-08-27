@@ -761,7 +761,7 @@
           "a"
         ]
       },
-      "layerBase": {
+      "layer": {
         "title": "layer",
         "x-stoplight": {
           "id": "vf3nbwzn5q7qh"
@@ -831,17 +831,15 @@
           },
           "clipped": {
             "type": "boolean",
-            "description": "Флаг, указывающий скрывается ли текущий слой другим слоем:\n* true: скрывается (при этом должен возвращатьсяпараметр maskedBy);\n* fals: не скрывается\n\n-- Не используем. Для фигмы всегда приходит значение: \"false\"",
-            "deprecated": true
+            "description": "Флаг, указывающий скрывается ли текущий слой другим слоем:\n* true: скрывается (при этом должен возвращатьсяпараметр maskedBy);\n* false: не скрывается"
           },
           "maskedBy": {
             "type": "string",
-            "description": "ИД слоя, который скрывает текущий слой\n\n-- Не используем;\n-- Не возвращается для figma",
-            "deprecated": true
+            "description": "ИД слоя, который является маской для текущего слоя"
           },
           "maskType": {
             "type": "string",
-            "description": "Тип маски\nДля figma возвращаются два из доступных значений:\n* alpha: если для маски в figma отключена настройка \"Использовать контур формы\";\n* figmaOutline: если для маски в figma включена настройка \"Использовать контур формы\"",
+            "description": "Тип маски.\nДля figma возвращаются два из доступных значений:\n* alpha: если для маски в figma отключена настройка \"Использовать контур формы\";\n* figmaOutline: если для маски в figma включена настройка \"Использовать контур формы\"",
             "enum": [
               "alpha",
               "inverse-luminosity",
@@ -853,7 +851,99 @@
             ]
           },
           "bitmapMask": {
-            "type": "string"
+            "type": "object",
+            "deprecated": true,
+            "description": "Маска растрового изображения. Используется только для инструмента Photoshop\n\n-- Не используем;\n-- Не возвращается для инструмента figma",
+            "properties": {
+              "bounds": {
+                "type": "object",
+                "description": "Границы растровой маски. Если отсутствует, вместо него используется значение layer.bitmap.",
+                "properties": {
+                  "top": {
+                    "$ref": "#/components/schemas/top"
+                  },
+                  "left": {
+                    "$ref": "#/components/schemas/left"
+                  },
+                  "weight": {
+                    "$ref": "#/components/schemas/weight"
+                  },
+                  "height": {
+                    "$ref": "#/components/schemas/height"
+                  },
+                  "right": {
+                    "$ref": "#/components/schemas/right"
+                  },
+                  "bottom": {
+                    "$ref": "#/components/schemas/bottom"
+                  }
+                },
+                "required": [
+                  "top",
+                  "left",
+                  "weight",
+                  "height",
+                  "right",
+                  "bottom"
+                ]
+              },
+              "filename": {
+                "type": "string",
+                "description": "Ссылка на URI файла растровой маски (URL или относительное имя файла)"
+              },
+              "enabled": {
+                "type": "boolean",
+                "description": "Флаг, указывающий будет ли приминена маска:\n* true: будет применена;\n* false: не применена"
+              },
+              "extendWithWhite": {
+                "type": "boolean",
+                "description": "Если значение \"true\", то растровое изображение маски должно быть изменено в соответствии с размером слоя, который оно маскирует, расширенная область должна быть заполнена сплошным белым цветом"
+              }
+            },
+            "required": [
+              "filename"
+            ]
+          },
+          "clipBounds": {
+            "type": "object",
+            "description": "Ограничивающие границы, которые можно использовать вместо прямоугольной ограничивающей маски того же положения и размера\n\n-- Не используется;\n-- Не возвращается для инструмента figma",
+            "deprecated": true,
+            "properties": {
+              "top": {
+                "$ref": "#/components/schemas/top"
+              },
+              "left": {
+                "$ref": "#/components/schemas/left"
+              },
+              "weight": {
+                "$ref": "#/components/schemas/weight"
+              },
+              "height": {
+                "$ref": "#/components/schemas/height"
+              },
+              "right": {
+                "$ref": "#/components/schemas/right"
+              },
+              "bottom": {
+                "$ref": "#/components/schemas/bottom"
+              }
+            },
+            "required": [
+              "top",
+              "left",
+              "weight",
+              "height",
+              "right",
+              "bottom"
+            ]
+          },
+          "opacity": {
+            "type": "number",
+            "format": "float",
+            "default": 1,
+            "minimum": 0,
+            "maximum": 1,
+            "description": "Уровень непрозрачности слоя: 1 - полностью непрозрачный, 0 - полностью прозрачный. Описывает значение альфа-канала (непрозрачности)"
           }
         },
         "required": [
