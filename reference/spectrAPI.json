@@ -761,31 +761,8 @@
           "a"
         ]
       },
-      "shapeLayer": {
-        "title": "shapeLayer",
-        "x-stoplight": {
-          "id": "3n8ojlyr1iy3o"
-        },
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string"
-          },
-          "type": {
-            "type": "string",
-            "enum": [
-              "shapeLayer"
-            ],
-            "description": "Форма слоя"
-          }
-        },
-        "required": [
-          "type"
-        ],
-        "description": "Описание слоя вектороной формы"
-      },
       "layerBase": {
-        "title": "layerBase",
+        "title": "layer",
         "x-stoplight": {
           "id": "vf3nbwzn5q7qh"
         },
@@ -859,7 +836,24 @@
           },
           "maskedBy": {
             "type": "string",
-            "description": "ИД слоя, который скрывает текущий слой"
+            "description": "ИД слоя, который скрывает текущий слой\n\n-- Не используем;\n-- Не возвращается для figma",
+            "deprecated": true
+          },
+          "maskType": {
+            "type": "string",
+            "description": "Тип маски\nДля figma возвращаются два из доступных значений:\n* alpha: если для маски в figma отключена настройка \"Использовать контур формы\";\n* figmaOutline: если для маски в figma включена настройка \"Использовать контур формы\"",
+            "enum": [
+              "alpha",
+              "inverse-luminosity",
+              "luminosity",
+              "outline",
+              "psd",
+              "svg",
+              "figmaOutline"
+            ]
+          },
+          "bitmapMask": {
+            "type": "string"
           }
         },
         "required": [
