@@ -918,23 +918,23 @@
               "weight": {
                 "$ref": "#/components/schemas/weight"
               },
-              "height": {
-                "$ref": "#/components/schemas/height"
-              },
               "right": {
                 "$ref": "#/components/schemas/right"
               },
               "bottom": {
                 "$ref": "#/components/schemas/bottom"
+              },
+              "height": {
+                "$ref": "#/components/schemas/height"
               }
             },
             "required": [
               "top",
               "left",
               "weight",
-              "height",
               "right",
-              "bottom"
+              "bottom",
+              "height"
             ]
           },
           "opacity": {
@@ -944,6 +944,15 @@
             "minimum": 0,
             "maximum": 1,
             "description": "Уровень непрозрачности слоя: 1 - полностью непрозрачный, 0 - полностью прозрачный. Описывает значение альфа-канала (непрозрачности)"
+          },
+          "fillOpacity": {
+            "type": "number",
+            "format": "float",
+            "deprecated": true,
+            "default": 1,
+            "minimum": 0,
+            "maximum": 1,
+            "description": "Уровень непрозрачности заливки слоя"
           }
         },
         "required": [
