@@ -1022,7 +1022,7 @@
                     },
                     "blendMode": {
                       "type": "string",
-                      "description": "Режим наложения слоя",
+                      "description": "Режим наложения слоя заливки",
                       "enum": [
                         "BLEND_DIVIDE",
                         "BLEND_SUBTRACTION",
@@ -1061,13 +1061,202 @@
                 }
               },
               "shadows": {
-                "type": "string"
+                "type": "array",
+                "description": "Дескриптор эффекта теней",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "ИД слоя тени"
+                    },
+                    "x": {
+                      "type": "number",
+                      "description": "Горизонтальное положение тени"
+                    },
+                    "y": {
+                      "type": "number",
+                      "description": "Вертикальное положение тени"
+                    },
+                    "blur": {
+                      "type": "number",
+                      "description": "Размытие тени"
+                    },
+                    "choke": {
+                      "type": "number",
+                      "description": "Величина размытия контура тени"
+                    },
+                    "color": {
+                      "$ref": "#/components/schemas/color"
+                    },
+                    "contour": {
+                      "type": "array",
+                      "description": "Описание функций контуров тени\n\n-- Не используем;\n-- Не возвращается для инструмента figma",
+                      "deprecated": true,
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "floor": {
+                            "type": "number",
+                            "format": "float",
+                            "description": "Нижний предел сегмента функции контура"
+                          },
+                          "ceil": {
+                            "type": "number",
+                            "format": "float",
+                            "description": "Верхний предел сегмента функции контура"
+                          },
+                          "points": {
+                            "type": "object",
+                            "description": "Массив точек сегмента функции контура",
+                            "properties": {
+                              "x": {
+                                "type": "number"
+                              },
+                              "y": {
+                                "type": "number"
+                              }
+                            }
+                          }
+                        },
+                        "required": [
+                          "floor",
+                          "ceil",
+                          "points"
+                        ]
+                      }
+                    },
+                    "inset": {
+                      "type": "boolean",
+                      "description": "Флаг, указывающий отбрасывается ли тень на внутреннюю часть формы:\n* true: отбрасывается (в figma выбрана тень с типом \"inner shadow\");\n* false: не отбрасывается (в figma выбрана тень с типом \"drop shadow\")"
+                    },
+                    "glow": {
+                      "type": "boolean",
+                      "description": "Флаг, указывающий, что эффект является \"свечением\" вместо тени:\n* true: свечение;\n* false: тень\n\n-- Не используем;\n-- Для figma всегда приходит \"false\""
+                    },
+                    "blendMode": {
+                      "type": "string",
+                      "description": "Режим наложения тени",
+                      "enum": [
+                        "BLEND_DIVIDE",
+                        "BLEND_SUBTRACTION",
+                        "COLOR",
+                        "COLOR_BURN",
+                        "COLOR_DODGE",
+                        "DARKEN",
+                        "DARKER_COLOR",
+                        "DIFFERENCE",
+                        "DISSOLVE",
+                        "EXCLUSION",
+                        "HARD_LIGHT",
+                        "HARD_MIX",
+                        "HUE",
+                        "LIGHTEN",
+                        "LIGHTER_COLOR",
+                        "LIGHTEN_BURN",
+                        "LIGHTEN_DODGE",
+                        "LIGHTEN_LIGHT",
+                        "LUMINOSITY",
+                        "MULTIPLY",
+                        "OVERLAY",
+                        "PASS_THROUGH",
+                        "PIN_LIGHT",
+                        "SATURATION",
+                        "SCREEN",
+                        "SOFT_LIGHT",
+                        "VIVID_LIGHT",
+                        "NORMAL"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "id"
+                  ]
+                }
               },
               "borders": {
-                "type": "string"
+                "type": "array",
+                "description": "Дескриптор обводки",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "ИД слоя обводки"
+                    },
+                    "width": {
+                      "type": "number",
+                      "format": "float",
+                      "description": "Ширина обводки"
+                    },
+                    "color": {
+                      "$ref": "#/components/schemas/color"
+                    },
+                    "style": {
+                      "type": "string",
+                      "enum": [
+                        "solid",
+                        "dotted",
+                        "dashed"
+                      ],
+                      "default": "solid",
+                      "description": "Стиль обводки. При пунктирном стиле обводки дополнительно возвращаются параметры dashedOffset и dashedSet\n\n-- Независимо от выбранного стиля в figma, всегда возвращается \"solid\""
+                    },
+                    "lineAlignment": {
+                      "type": "string",
+                      "enum": [
+                        "outside",
+                        "inside",
+                        "center"
+                      ],
+                      "description": "Выравниевание обводки относительно контура формы"
+                    },
+                    "lineJoin": {
+                      "type": "string",
+                      "enum": [
+                        "bevel",
+                        "round",
+                        "miter"
+                      ],
+                      "description": "Стиль соединения между сегментами обводки",
+                      "default": "miter"
+                    },
+                    "lineCap": {
+                      "type": "string",
+                      "enum": [
+                        "butt",
+                        "round",
+                        "square"
+                      ],
+                      "default": "butt",
+                      "description": "Стиль конечных точек обводки"
+                    },
+                    "miterLimit": {
+                      "type": "number",
+                      "format": "float",
+                      "description": "Предел угла, образованного между двумя сегментами обводки",
+                      "deprecated": true
+                    },
+                    "dashOffset": {
+                      "type": "string",
+                      "deprecated": true
+                    },
+                    "dashSet": {
+                      "type": "string",
+                      "deprecated": true
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "width"
+                  ]
+                }
               },
               "blurs": {
-                "type": "string"
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
               }
             }
           }
