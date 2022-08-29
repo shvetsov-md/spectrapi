@@ -1238,17 +1238,67 @@
                       "deprecated": true
                     },
                     "dashOffset": {
-                      "type": "string",
+                      "type": "number",
                       "deprecated": true,
-                      "description": "Начальное смещение границы штриха (применяется к пунктирной обводке)\n\n-- Не используется; \n-- Приходит только для стиля обводки style: \"dash\", который не возвращает octopus на основе дизайн-файлов figma"
+                      "description": "Начальное смещение границы штриха (применяется к пунктирной обводке)\n\n-- Не используется; \n-- Приходит только для стиля обводки style: \"dash\", который не возвращает octopus на основе дизайн-файлов figma",
+                      "format": "float"
                     },
                     "dashSet": {
                       "type": "array",
                       "deprecated": true,
                       "description": "Настройка чередования штрихов и пробелов (применяется для пунктироной обводки)\n\n-- Не используется; \n-- Приходит только для стиля обводки style: \"dash\", который не возвращает octopus на основе дизайн-файлов figma",
                       "items": {
-                        "type": "number"
+                        "type": "number",
+                        "format": "float"
                       }
+                    },
+                    "overprint": {
+                      "type": "boolean",
+                      "description": "Если внутренняя/центрированная обводка с прозрачностью делает видимым базовый экземпляр (true) или экземпляр обрезается обводкой (false).\n\n-- Не используем;\n-- Не возвращается для инструмента figma"
+                    },
+                    "default": {
+                      "type": "boolean",
+                      "description": "Если значение true, то заливка применяется ко всему слою, иначе, false, к растровому изображению\n\n-- Не используем;\n-- Для figma всегда возвращается \"true\""
+                    },
+                    "blendMode": {
+                      "type": "string",
+                      "enum": [
+                        "BLEND_DIVIDE",
+                        "BLEND_SUBTRACTION",
+                        "COLOR",
+                        "COLOR_BURN",
+                        "COLOR_DODGE",
+                        "DARKEN",
+                        "DARKER_COLOR",
+                        "DIFFERENCE",
+                        "DISSOLVE",
+                        "EXCLUSION",
+                        "HARD_LIGHT",
+                        "HARD_MIX",
+                        "HUE",
+                        "LIGHTEN",
+                        "LIGHTER_COLOR",
+                        "LIGHTEN_BURN",
+                        "LIGHTEN_DODGE",
+                        "LIGHTEN_LIGHT",
+                        "LUMINOSITY",
+                        "MULTIPLY",
+                        "OVERLAY",
+                        "PASS_THROUGH",
+                        "PIN_LIGHT",
+                        "SATURATION",
+                        "SCREEN",
+                        "SOFT_LIGHT",
+                        "VIVID_LIGHT",
+                        "NORMAL"
+                      ],
+                      "description": "Режим наложения стиля обводки"
+                    },
+                    "pattern": {
+                      "$ref": "#/components/schemas/effectAbstractPattern"
+                    },
+                    "gradient": {
+                      "$ref": "#/components/schemas/effectAbstractGradient"
                     }
                   },
                   "required": [
