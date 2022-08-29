@@ -993,69 +993,72 @@
             "description": "Дескриптор эффектов слоя",
             "properties": {
               "fills": {
-                "type": "object",
+                "type": "array",
                 "description": "Слои заливки",
-                "properties": {
-                  "id": {
-                    "type": "string",
-                    "description": "ИД заливки"
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "ИД заливки"
+                    },
+                    "color": {
+                      "$ref": "#/components/schemas/color"
+                    },
+                    "gradient": {
+                      "$ref": "#/components/schemas/effectAbstractGradient"
+                    },
+                    "pattern": {
+                      "$ref": "#/components/schemas/effectAbstractPattern"
+                    },
+                    "nocolor": {
+                      "type": "boolean",
+                      "description": "Флаг, указывающий на пустую заливку (для слоев формы):\n* true: используется пустая заливка;\n* false: не используется\n\n-- Не используем;\n-- Не возвращается для инструмента figma",
+                      "deprecated": true
+                    },
+                    "default": {
+                      "type": "boolean",
+                      "description": "Если значение true, то заливка применяется ко всему слою, иначе, false, к растровому изображению\n\n-- Не используем;\n-- Для figma всегда возвращается \"true\""
+                    },
+                    "blendMode": {
+                      "type": "string",
+                      "description": "Режим наложения слоя",
+                      "enum": [
+                        "BLEND_DIVIDE",
+                        "BLEND_SUBTRACTION",
+                        "COLOR",
+                        "COLOR_BURN",
+                        "COLOR_DODGE",
+                        "DARKEN",
+                        "DARKER_COLOR",
+                        "DIFFERENCE",
+                        "DISSOLVE",
+                        "EXCLUSION",
+                        "HARD_LIGHT",
+                        "HARD_MIX",
+                        "HUE",
+                        "LIGHTEN",
+                        "LIGHTER_COLOR",
+                        "LIGHTEN_BURN",
+                        "LIGHTEN_DODGE",
+                        "LIGHTEN_LIGHT",
+                        "LUMINOSITY",
+                        "MULTIPLY",
+                        "OVERLAY",
+                        "PASS_THROUGH",
+                        "PIN_LIGHT",
+                        "SATURATION",
+                        "SCREEN",
+                        "SOFT_LIGHT",
+                        "VIVID_LIGHT",
+                        "NORMAL"
+                      ]
+                    }
                   },
-                  "color": {
-                    "$ref": "#/components/schemas/color"
-                  },
-                  "gradient": {
-                    "$ref": "#/components/schemas/effectAbstractGradient"
-                  },
-                  "pattern": {
-                    "$ref": "#/components/schemas/effectAbstractPattern"
-                  },
-                  "nocolor": {
-                    "type": "boolean",
-                    "description": "Флаг, указывающий на пустую заливку (для слоев формы):\n* true: используется пустая заливка;\n* false: не используется\n\n-- Не используем;\n-- Не возвращается для инструмента figma",
-                    "deprecated": true
-                  },
-                  "default": {
-                    "type": "boolean",
-                    "description": "Если значение true, то заливка применяется ко всему слою, иначе, false, к растровому изображению\n\n-- Не используем;\n-- Для figma всегда возвращается \"true\""
-                  },
-                  "blendMode": {
-                    "type": "string",
-                    "description": "Режим наложения слоя",
-                    "enum": [
-                      "BLEND_DIVIDE",
-                      "BLEND_SUBTRACTION",
-                      "COLOR",
-                      "COLOR_BURN",
-                      "COLOR_DODGE",
-                      "DARKEN",
-                      "DARKER_COLOR",
-                      "DIFFERENCE",
-                      "DISSOLVE",
-                      "EXCLUSION",
-                      "HARD_LIGHT",
-                      "HARD_MIX",
-                      "HUE",
-                      "LIGHTEN",
-                      "LIGHTER_COLOR",
-                      "LIGHTEN_BURN",
-                      "LIGHTEN_DODGE",
-                      "LIGHTEN_LIGHT",
-                      "LUMINOSITY",
-                      "MULTIPLY",
-                      "OVERLAY",
-                      "PASS_THROUGH",
-                      "PIN_LIGHT",
-                      "SATURATION",
-                      "SCREEN",
-                      "SOFT_LIGHT",
-                      "VIVID_LIGHT",
-                      "NORMAL"
-                    ]
-                  }
-                },
-                "required": [
-                  "id"
-                ]
+                  "required": [
+                    "id"
+                  ]
+                }
               },
               "shadows": {
                 "type": "string"
