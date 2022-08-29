@@ -1239,11 +1239,16 @@
                     },
                     "dashOffset": {
                       "type": "string",
-                      "deprecated": true
+                      "deprecated": true,
+                      "description": "Начальное смещение границы штриха (применяется к пунктирной обводке)\n\n-- Не используется; \n-- Приходит только для стиля обводки style: \"dash\", который не возвращает octopus на основе дизайн-файлов figma"
                     },
                     "dashSet": {
-                      "type": "string",
-                      "deprecated": true
+                      "type": "array",
+                      "deprecated": true,
+                      "description": "Настройка чередования штрихов и пробелов (применяется для пунктироной обводки)\n\n-- Не используется; \n-- Приходит только для стиля обводки style: \"dash\", который не возвращает octopus на основе дизайн-файлов figma",
+                      "items": {
+                        "type": "number"
+                      }
                     }
                   },
                   "required": [
