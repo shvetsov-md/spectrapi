@@ -1254,7 +1254,8 @@
                     },
                     "overprint": {
                       "type": "boolean",
-                      "description": "Если внутренняя/центрированная обводка с прозрачностью делает видимым базовый экземпляр (true) или экземпляр обрезается обводкой (false).\n\n-- Не используем;\n-- Не возвращается для инструмента figma"
+                      "description": "Если внутренняя/центрированная обводка с прозрачностью делает видимым базовый экземпляр (true) или экземпляр обрезается обводкой (false).\n\n-- Не используем;\n-- Не возвращается для инструмента figma",
+                      "deprecated": true
                     },
                     "default": {
                       "type": "boolean",
@@ -1309,8 +1310,71 @@
               },
               "blurs": {
                 "type": "array",
+                "description": "Дескриптор эффекта размытия",
                 "items": {
-                  "type": "object"
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "ИД слоя размытия"
+                    },
+                    "type": {
+                      "type": "string",
+                      "enum": [
+                        "GAUSSIAN",
+                        "MOTION",
+                        "ZOOM",
+                        "BACKGROUND"
+                      ],
+                      "description": "Тип эффекта размытия\n\nДля документа из инструмента figma используются только: GAUSSIAN и BACKGROUND"
+                    },
+                    "radius": {
+                      "type": "number",
+                      "format": "float",
+                      "description": "Радиус эффекта размытия"
+                    },
+                    "angle": {
+                      "type": "number",
+                      "format": "float",
+                      "description": "Угол размытия при движении (в градусах)\n\n-- Не используем;\n-- Не возвращается для инструмента figma",
+                      "deprecated": true
+                    },
+                    "center": {
+                      "type": "object",
+                      "description": "Центр размытия масштабирования\n\n-- Не используем;\n-- Не возвращается для инструмента figma",
+                      "deprecated": true,
+                      "properties": {
+                        "x": {
+                          "type": "number",
+                          "format": "float"
+                        },
+                        "y": {
+                          "type": "number",
+                          "format": "float"
+                        }
+                      }
+                    },
+                    "brightness": {
+                      "type": "number",
+                      "format": "float",
+                      "default": 100,
+                      "description": "Уровень яркости размытия (в %)\n\n-- Не используем;\n-- Не возвращается для инструмента figma",
+                      "deprecated": true
+                    },
+                    "opacity": {
+                      "type": "number",
+                      "format": "float",
+                      "default": 1,
+                      "description": "Непрозрачность размытия. Описывает значение альфа-канала\n\n-- Не используем;\n-- Не возвращается для инструмента figma",
+                      "minimum": 0,
+                      "maximum": 1,
+                      "deprecated": true
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "type"
+                  ]
                 }
               }
             }
