@@ -1530,11 +1530,76 @@
             "type": "boolean",
             "description": "Флаг, указывающий был ли инвертирован градиент:\n* true: инвертирован;\n* false: не инвертирован\n\n-- Не используем;\n-- Для figma всегда возвращается \"true\"",
             "deprecated": true
+          },
+          "offset": {
+            "type": "object",
+            "required": [
+              "horizontal",
+              "vertical"
+            ],
+            "description": "Смещение градиента к относительному значению\n\n-- Не используем;\n-- Не возвращается для инструмента figma",
+            "deprecated": true,
+            "properties": {
+              "horizontal": {
+                "type": "number",
+                "format": "float",
+                "description": "Смещение по оси X"
+              },
+              "vertical": {
+                "type": "number",
+                "format": "float",
+                "description": "Смещение по оси Y"
+              }
+            }
+          },
+          "scale": {
+            "type": "number",
+            "format": "float",
+            "default": 1,
+            "description": "Градиентная шкала"
+          },
+          "angle": {
+            "type": "number",
+            "format": "float",
+            "description": "Угол наклона в градусах\n\n-- Не используем;\n-- Не возвращается для инструмента figma",
+            "deprecated": true
+          },
+          "relativeTo": {
+            "type": "string",
+            "enum": [
+              "layer",
+              "document"
+            ],
+            "description": "Настройка конфигурации относительно слоя или документа\n\n-- Не используем;\n-- Для инструмента figma всегда приходит \"document\"",
+            "deprecated": true
+          },
+          "ellipseLength": {
+            "type": "number",
+            "format": "float",
+            "default": 1,
+            "description": "Для градиентов в форме эллипса (\"radila\" и \"angular\" в figma), описывает отношение большой к малой полуоси эллипса"
+          },
+          "from": {
+            "type": "array",
+            "description": "Дескриптор первой точки направления градиента",
+            "items": {
+              "type": "number",
+              "format": "float"
+            }
+          },
+          "to": {
+            "type": "array",
+            "description": "Дескриптор конечной точки направления градиента",
+            "items": {
+              "type": "number",
+              "format": "float"
+            }
           }
         },
         "required": [
           "stops",
-          "type"
+          "type",
+          "relativeTo"
         ]
       },
       "effectAbstractPattern": {
