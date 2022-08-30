@@ -1659,8 +1659,7 @@
             "type": "number",
             "format": "float",
             "default": 1,
-            "description": "Шкала паттерна\n\n-- Не используем;\n-- Не возвращается для инструмента figma",
-            "deprecated": true
+            "description": "Шкала паттерна\n\n-- Используется только для типа паттерна: \"tile\""
           },
           "type": {
             "type": "string",
