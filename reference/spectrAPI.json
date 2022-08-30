@@ -1613,10 +1613,71 @@
         },
         "description": "Дескриптор паттерна",
         "properties": {
-          "id": {
-            "type": "string"
+          "filename": {
+            "type": "string",
+            "description": "Ссылка на URI файла шаблона (URL или относительное имя файла)"
+          },
+          "opacity": {
+            "type": "number",
+            "format": "float",
+            "default": 1,
+            "description": "Непрозрачность паттерна",
+            "minimum": 0,
+            "maximum": 1
+          },
+          "offset": {
+            "type": "object",
+            "description": "Смещение шаблона к относительному значеню\n\n-- Не используем;\n-- Не возвращается для инструмента figma",
+            "deprecated": true,
+            "properties": {
+              "horizontal": {
+                "type": "number",
+                "format": "float",
+                "description": "Смещение по оси X"
+              },
+              "vertical": {
+                "type": "number",
+                "format": "float",
+                "description": "Смещение по оси Y"
+              }
+            },
+            "required": [
+              "horizontal",
+              "vertical"
+            ]
+          },
+          "relativeTo": {
+            "type": "string",
+            "enum": [
+              "layer",
+              "document"
+            ],
+            "description": "Настройка конфигурации относительно слоя или документа\n\n-- Не используем;\n-- Для инструмента figma всегда приходит \"layer\"",
+            "deprecated": true
+          },
+          "scale": {
+            "type": "number",
+            "format": "float",
+            "default": 1,
+            "description": "Шкала паттерна\n\n-- Не используем;\n-- Не возвращается для инструмента figma",
+            "deprecated": true
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "fill",
+              "fit",
+              "stretch",
+              "tile"
+            ],
+            "description": "Тип паттерна (тип \"stretch\" в figma называется \"crop\")"
           }
-        }
+        },
+        "required": [
+          "filename",
+          "relativeTo",
+          "type"
+        ]
       }
     },
     "parameters": {}
