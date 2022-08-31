@@ -1749,13 +1749,27 @@
                 ]
               },
               "blank": {
-                "type": "boolean"
+                "type": "boolean",
+                "description": "true - если слой полностью пустой. Такой слой не имеет непрозрачных пикселей;\nfalse - если слой не пустой"
               },
               "simpleFill": {
                 "$ref": "#/components/schemas/color"
               },
               "filename": {
-                "type": "string"
+                "type": "string",
+                "description": "Ссылка на URI файла растровой маски (URL или относительное имя файла)"
+              },
+              "premultiplied": {
+                "type": "boolean",
+                "description": "Флаг, указывающий было ли канал растрового изображения умножен на альфа (внутренний параметр)"
+              },
+              "metadata": {
+                "type": "object",
+                "description": "Содержит различную информацию о конфигурации рендеринга (внутренний параметр octopus)"
+              },
+              "effectsApplied": {
+                "type": "boolean",
+                "description": "Флаг, уазывающий, содержит ли растровое изображение все эффекты:\n* true: содержит;\n* false: не содержит"
               }
             }
           }
