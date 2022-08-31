@@ -1508,10 +1508,32 @@
           "isVirtual": {
             "type": "boolean",
             "description": "Флаг, обозначающий слой, который был искусственно добавлен в документ и который не существует в исходном источнике (например, фоновые слои в figma):\n* true: искуственный слой;\n* false: реальный слой из исходного документа figma"
+          },
+          "type": {
+            "type": "string",
+            "description": "Тип слоя\n\n-- Для figma могут вернуться только: \"shapeLayer\", \"layer\", \"groupLayer\", \"textLayer\"",
+            "enum": [
+              "shapeLayer",
+              "textLayer",
+              "document",
+              "adjustmentLayer",
+              "layer",
+              "backgroundLayer",
+              "groupLayer"
+            ]
+          },
+          "shapeRadius": {
+            "type": "array",
+            "description": "Массив радиусов углов, которые являются вершинам в контуре фигуры. Это доп. нформация, поскольку геометрия фигуры уже учитывает радиусы.\n\n-- Не используем;\n-- Возвращается только для type: \"shapeLayer\"\n-- Не возвращается для инструмента figma",
+            "items": {
+              "type": "number",
+              "deprecated": true
+            }
           }
         },
         "required": [
-          "id"
+          "id",
+          "type"
         ]
       },
       "shape": {
@@ -1523,12 +1545,12 @@
         "description": "Дескриптор формы",
         "properties": {
           "paths": {
-            "type": "string"
+            "$ref": "#/components/schemas/shapePath"
           },
           "enabled": {
             "type": "boolean",
             "default": true,
-            "description": "Если форма является векторной маской, то данный флаг указывает, включена маска или нет:\n* true - маска включена (по умолчанию);\n* false - выключена\n\n-- Не используется для слоев фигмы",
+            "description": "Если форма является векторной маской, то данный флаг указывает, включена маска или нет:\n* true - маска включена (по умолчанию);\n* false - выключена\n\n-- Не используем;\n-- Не возвращается для инструмента figma",
             "deprecated": true
           },
           "windingRule": {
