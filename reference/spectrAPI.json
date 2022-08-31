@@ -1499,10 +1499,17 @@
           },
           "resizingContraints": {
             "type": "array",
-            "deprecated": true,
-            "description": "Ограничения на изменение размера слоя, применяемые, когда слой участвует в процессе создания экземпляра символа.\n\nСписок ограничений, определяющих поведение объекта при изменении размера.\n\n-- Не используем;\n-- Не возвращается для инструмента figma",
+            "description": "Ограничения на изменение размера слоя, применяемые, когда слой участвует в процессе создания экземпляра символа.\n\nСписок ограничений, определяющих поведение объекта при изменении размера родительского объекта.\n\n-- Если вернулось значение height, то в figma это выравнивание center по высоте;\n-- Если вернулось значение height, то в figma это выравнивание center по ширине;\n-- Если не вернулись значения для ограничения по ширине или высоте, то соответствующее ограничение в figma имеет значение scale",
             "items": {
-              "type": "string"
+              "type": "string",
+              "enum": [
+                "left",
+                "right",
+                "top",
+                "bottom",
+                "height",
+                "weight"
+              ]
             }
           },
           "isVirtual": {
@@ -1524,10 +1531,9 @@
           },
           "shapeRadius": {
             "type": "array",
-            "description": "Массив радиусов углов, которые являются вершинам в контуре фигуры. Это доп. нформация, поскольку геометрия фигуры уже учитывает радиусы.\n\n-- Не используем;\n-- Возвращается только для type: \"shapeLayer\"\n-- Не возвращается для инструмента figma",
+            "description": "Массив радиусов углов прямоугольника, которые являются вершинам в контуре формы\n\n-- Возвращается только для type: \"shapeLayer\"",
             "items": {
-              "type": "number",
-              "deprecated": true
+              "type": "number"
             }
           }
         },
@@ -1585,7 +1591,7 @@
                 "ellipse",
                 "path"
               ],
-              "description": "Тип формы, которую представляет векторный путь. Если пустой, то форма неизвестна для octopus\n\n-- Можно не использовать. Для фигмы в данном параметре приходит одно из доступных значени: \"path\"",
+              "description": "Тип формы, которую представляет векторный путь. Если пустой, то форма неизвестна для octopus\n\n-- Можно не использовать. Для фигмы в данном параметре приходит одно значение: \"path\"",
               "deprecated": true
             },
             "booleanOperation": {
@@ -1602,8 +1608,46 @@
               "deprecated": true
             },
             "subpaths": {
-              "type": "string",
-              "description": "Массив подпутей (контуров), из которых состоит основной путь"
+              "$ref": "#/components/schemas/shapeSubpath"
+            },
+            "bounds": {
+              "type": "object",
+              "description": "Границы пути. Если отсутствует, то границы неизвестны\n\n-- Не используем;\n-- Не возвращается для инструмента figma",
+              "deprecated": true,
+              "properties": {
+                "top": {
+                  "$ref": "#/components/schemas/top"
+                },
+                "left": {
+                  "$ref": "#/components/schemas/left"
+                },
+                "weight": {
+                  "$ref": "#/components/schemas/weight"
+                },
+                "height": {
+                  "$ref": "#/components/schemas/height"
+                },
+                "right": {
+                  "$ref": "#/components/schemas/right"
+                },
+                "bottom": {
+                  "$ref": "#/components/schemas/bottom"
+                }
+              },
+              "required": [
+                "top",
+                "left",
+                "weight",
+                "height",
+                "right",
+                "bottom"
+              ]
+            },
+            "radius": {
+              "type": "string"
+            },
+            "rotation": {
+              "type": "string"
             }
           },
           "required": [
