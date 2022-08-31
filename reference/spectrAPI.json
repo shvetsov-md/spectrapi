@@ -1378,6 +1378,119 @@
                 }
               }
             }
+          },
+          "bitmap": {
+            "type": "object",
+            "deprecated": true,
+            "description": "Содержимое слоя в виде растрового изображения\n\n-- Не используем;\n-- Не возвращается для инструмента figma",
+            "properties": {
+              "duplicateOf": {
+                "type": "string",
+                "description": "Ссылка на ИД слоя, из которого должен быть скопирован дескриптор растрового изображения."
+              },
+              "bounds": {
+                "type": "object",
+                "description": "Границы растрового изображения, включая эффекты: тени, размытие, обводку",
+                "properties": {
+                  "top": {
+                    "$ref": "#/components/schemas/top"
+                  },
+                  "left": {
+                    "$ref": "#/components/schemas/left"
+                  },
+                  "weight": {
+                    "$ref": "#/components/schemas/weight"
+                  },
+                  "height": {
+                    "$ref": "#/components/schemas/height"
+                  },
+                  "right": {
+                    "$ref": "#/components/schemas/right"
+                  },
+                  "bottom": {
+                    "$ref": "#/components/schemas/bottom"
+                  }
+                },
+                "required": [
+                  "top",
+                  "left",
+                  "weight",
+                  "height",
+                  "right",
+                  "bottom"
+                ]
+              },
+              "blank": {
+                "type": "boolean",
+                "description": "true - если слой полностью пустой. Такой слой не имеет непрозрачных пикселей;\nfalse - если слой не пустой"
+              },
+              "simpleFill": {
+                "$ref": "#/components/schemas/color"
+              },
+              "filename": {
+                "type": "string",
+                "description": "Ссылка на URI файла растровой маски (URL или относительное имя файла)"
+              },
+              "premultiplied": {
+                "type": "boolean",
+                "description": "Флаг, указывающий было ли канал растрового изображения умножен на альфа (внутренний параметр)"
+              },
+              "metadata": {
+                "type": "object",
+                "description": "Содержит различную информацию о конфигурации рендеринга (внутренний параметр octopus)"
+              },
+              "effectsApplied": {
+                "type": "boolean",
+                "description": "Флаг, уазывающий, содержит ли растровое изображение все эффекты:\n* true: содержит;\n* false: не содержит"
+              }
+            }
+          },
+          "rotation": {
+            "type": "number",
+            "format": "float",
+            "description": "Угол поворота в градусах\n\n-- Для корректного отображения в инструменте figma, если вернулось значение >= 0, то необходимо вычесть это значение из 180 для отображения слоя в фигма. Если значение <= 0, то значение остается как есть"
+          },
+          "isFlippedVertical": {
+            "type": "boolean",
+            "deprecated": true,
+            "description": "Необходимость переворота слоя по оси y:\n* true: слой должен быть перевернут по оси y;\n* false: слой не должен быть перевернут\n\n-- Не используем;\n-- Для файлов из инструмента figms всегда возвращается \"false\""
+          },
+          "isFlippedHorizontal": {
+            "type": "boolean",
+            "deprecated": true,
+            "description": "Необходимость переворота слоя по оси x:\n* true: слой должен быть перевернут по оси x;\n* false: слой не должен быть перевернут\n\n-- Не используем;\n-- Для файлов из инструмента figms всегда возвращается \"false\""
+          },
+          "blank": {
+            "type": "boolean",
+            "description": "true, если слой полностью пустой. Такой слой не имеет непрозрачных пикселей.\n\n-- Не используем;\n-- Не возвращается для инструмента figma",
+            "deprecated": true
+          },
+          "symbolID": {
+            "type": "string",
+            "description": "ИД фрейма в документе octopus. Возвращается если фрейм фигмы является компонентом\n\n-- Можно использовать для",
+            "deprecated": true
+          },
+          "overrides": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "symbolID",
+                  "stringValue",
+                  "image",
+                  "flowDestination",
+                  "layerStyle",
+                  "fillColor"
+                ]
+              },
+              "path": {
+                "type": "string"
+              },
+              "value": {
+                "type": "string"
+              }
+            }
           }
         },
         "required": [
@@ -1704,72 +1817,6 @@
                 "type": "number",
                 "format": "float",
                 "description": "Смещение по вертикали. При положительном значении элемент смещается вниз или вверх при отрицательном значении"
-              }
-            }
-          },
-          "bitmap": {
-            "type": "object",
-            "deprecated": true,
-            "description": "Содержимое слоя в виде растрового изображения\n\n-- Не используем;\n-- Не возвращается для инструмента figma",
-            "properties": {
-              "duplicateOf": {
-                "type": "string",
-                "description": "Ссылка на ИД слоя, из которого должен быть скопирован дескриптор растрового изображения."
-              },
-              "bounds": {
-                "type": "object",
-                "description": "Границы растрового изображения, включая эффекты: тени, размытие, обводку",
-                "properties": {
-                  "top": {
-                    "$ref": "#/components/schemas/top"
-                  },
-                  "left": {
-                    "$ref": "#/components/schemas/left"
-                  },
-                  "weight": {
-                    "$ref": "#/components/schemas/weight"
-                  },
-                  "height": {
-                    "$ref": "#/components/schemas/height"
-                  },
-                  "right": {
-                    "$ref": "#/components/schemas/right"
-                  },
-                  "bottom": {
-                    "$ref": "#/components/schemas/bottom"
-                  }
-                },
-                "required": [
-                  "top",
-                  "left",
-                  "weight",
-                  "height",
-                  "right",
-                  "bottom"
-                ]
-              },
-              "blank": {
-                "type": "boolean",
-                "description": "true - если слой полностью пустой. Такой слой не имеет непрозрачных пикселей;\nfalse - если слой не пустой"
-              },
-              "simpleFill": {
-                "$ref": "#/components/schemas/color"
-              },
-              "filename": {
-                "type": "string",
-                "description": "Ссылка на URI файла растровой маски (URL или относительное имя файла)"
-              },
-              "premultiplied": {
-                "type": "boolean",
-                "description": "Флаг, указывающий было ли канал растрового изображения умножен на альфа (внутренний параметр)"
-              },
-              "metadata": {
-                "type": "object",
-                "description": "Содержит различную информацию о конфигурации рендеринга (внутренний параметр octopus)"
-              },
-              "effectsApplied": {
-                "type": "boolean",
-                "description": "Флаг, уазывающий, содержит ли растровое изображение все эффекты:\n* true: содержит;\n* false: не содержит"
               }
             }
           }
