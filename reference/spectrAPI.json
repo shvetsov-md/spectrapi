@@ -1706,6 +1706,58 @@
                 "description": "Смещение по вертикали. При положительном значении элемент смещается вниз или вверх при отрицательном значении"
               }
             }
+          },
+          "bitmap": {
+            "type": "object",
+            "deprecated": true,
+            "description": "Содержимое слоя в виде растрового изображения\n\n-- Не используем;\n-- Не возвращается для инструмента figma",
+            "properties": {
+              "duplicateOf": {
+                "type": "string",
+                "description": "Ссылка на ИД слоя, из которого должен быть скопирован дескриптор растрового изображения."
+              },
+              "bounds": {
+                "type": "object",
+                "description": "Границы растрового изображения, включая эффекты: тени, размытие, обводку",
+                "properties": {
+                  "top": {
+                    "$ref": "#/components/schemas/top"
+                  },
+                  "left": {
+                    "$ref": "#/components/schemas/left"
+                  },
+                  "weight": {
+                    "$ref": "#/components/schemas/weight"
+                  },
+                  "height": {
+                    "$ref": "#/components/schemas/height"
+                  },
+                  "right": {
+                    "$ref": "#/components/schemas/right"
+                  },
+                  "bottom": {
+                    "$ref": "#/components/schemas/bottom"
+                  }
+                },
+                "required": [
+                  "top",
+                  "left",
+                  "weight",
+                  "height",
+                  "right",
+                  "bottom"
+                ]
+              },
+              "blank": {
+                "type": "boolean"
+              },
+              "simpleFill": {
+                "$ref": "#/components/schemas/color"
+              },
+              "filename": {
+                "type": "string"
+              }
+            }
           }
         },
         "required": [
