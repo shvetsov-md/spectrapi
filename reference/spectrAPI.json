@@ -1753,8 +1753,10 @@
             },
             "coordinates": {
               "type": "array",
+              "description": "Массив координат точки. Координаты x и y чередуются в массиве.\n\nЕсли точка имеет тип bezier, элементы сохраняются как [c1.x c1.y c2.x c2.y p.x p.y], где p - точка на кривой, а c1 и c2 - ее соседние контрольные точки. Для типа point - [p.x p.y].",
               "items": {
-                "type": "string"
+                "type": "number",
+                "format": "float"
               }
             },
             "radius": {
