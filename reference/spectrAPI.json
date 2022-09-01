@@ -1535,6 +1535,37 @@
             "items": {
               "type": "number"
             }
+          },
+          "appliedStyles": {
+            "type": "array",
+            "description": "Применяемые стили заливки, оводки, теней, размытия\n\n-- Не используем;\n-- Не возвращается для инструмента figma",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "description": "ИД стиля"
+                },
+                "appliedAs": {
+                  "type": "object",
+                  "description": "Применяемый стиль",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "enum": [
+                        "FILL",
+                        "STROKE",
+                        "EFFECT"
+                      ],
+                      "description": "Тип стиля: \n* FILL - заливка;\n* STROKE - обводка; \n* EFFECT - эффект (тень или размытие)"
+                    }
+                  }
+                }
+              },
+              "required": [
+                "id"
+              ]
+            }
           }
         },
         "required": [
