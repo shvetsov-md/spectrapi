@@ -1531,7 +1531,7 @@
           },
           "shapeRadius": {
             "type": "array",
-            "description": "Массив радиусов углов прямоугольника, которые являются вершинам в контуре формы\n\n-- Возвращается только для type: \"shapeLayer\"",
+            "description": "Массив радиусов углов формы, которые являются вершинам в контуре формы",
             "items": {
               "type": "number"
             }
@@ -1713,19 +1713,61 @@
         "x-stoplight": {
           "id": "pok4gdtm9bp3q"
         },
-        "type": "object",
+        "type": "array",
         "description": "Дескриптор одного контура",
-        "properties": {
-          "closed": {
-            "type": "boolean",
-            "description": "Флаг, указывающий открыт или закрыт путь:\n* true - путь закрыт;\n* false - путь закрыт\n\n-- Можно не использщовать. Для фигмы всегда возвращается: \"true\""
-          },
-          "points": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/shapePath"
+        "items": {
+          "type": "object",
+          "properties": {
+            "closed": {
+              "type": "boolean",
+              "description": "Флаг, указывающий, закрыт путь или открыт:\n* true: путь открыт;\n* false: закрыт\n\n-- Можно не использовать, для figma всегда приходит true"
+            },
+            "points": {
+              "$ref": "#/components/schemas/shapePoint"
             }
-          }
+          },
+          "required": [
+            "points"
+          ]
+        }
+      },
+      "shapePoint": {
+        "title": "shapePoint",
+        "x-stoplight": {
+          "id": "lonuuhy0s3vzq"
+        },
+        "type": "array",
+        "description": "Массив описания точек пути",
+        "items": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": [
+                "point",
+                "quad",
+                "cubic",
+                "bezier"
+              ],
+              "description": "Тип точки:\n* point: простая точка;\n* quad: точка имеет одну контрольную точку, соседний сегмент представляет квадратную кривую Безье;\n* cubic: точка имеет две контрольные точки, соседний сегмент представляет кубическую кривую;  \n* bezier: псевдоним для cubic\n\n-- Для figma возвращабтся только два типа: bezier - для отрисовки эллипса и кривых с изгибами, point - для отсальных векторных форм"
+            },
+            "coordinates": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "radius": {
+              "type": "number",
+              "format": "float",
+              "description": "Радиус угла в точке\n\n-- Не используем;\n-- Не возвращается для инструмента figma",
+              "deprecated": true
+            }
+          },
+          "required": [
+            "type",
+            "coordinates"
+          ]
         }
       },
       "effectAbstractGradient": {
