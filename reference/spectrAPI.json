@@ -606,11 +606,7 @@
                       "type": "array",
                       "description": "Слои фрейма",
                       "items": {
-                        "oneOf": [
-                          {
-                            "$ref": ""
-                          }
-                        ]
+                        "$ref": "#/components/schemas/layer"
                       }
                     }
                   },
@@ -1579,9 +1575,11 @@
           },
           "artboard": {
             "type": "object",
+            "description": "Границы слоя, если слой является фреймом\n\n-- Возвращается только для слоя с типом layer.type: \"groupLayer\"",
             "properties": {
               "bounds": {
                 "type": "object",
+                "description": "Границы слоя",
                 "properties": {
                   "top": {
                     "$ref": "#/components/schemas/top"
@@ -1615,9 +1613,22 @@
                 "$ref": "#/components/schemas/color"
               },
               "clipsContent": {
-                "type": "boolean"
+                "type": "boolean",
+                "description": "Если true, то области подслоев, которая выходит за границы фрейма, будут скрыты (обрезаны). Иначе, false, будут отображаться"
               }
             }
+          },
+          "smartLayout": {
+            "type": "string",
+            "description": "-- Возвращается только для слоя с типом layer.type: \"groupLayer\";\n-- Не используем. Не возвращается для инструмента figma",
+            "enum": [
+              "RIGHT_TO_LEFT",
+              "HORIZONTAL_CENTER",
+              "TOP_TO_BOTTOM",
+              "BOTTOM_TO_TOP",
+              "HORIZONTAL_CENTER",
+              "LEFT_TO_RIGHT"
+            ]
           }
         },
         "required": [
