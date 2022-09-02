@@ -2125,8 +2125,56 @@
                 "description": "Смещение по вертикали. При положительном значении элемент смещается вниз или вверх при отрицательном значении"
               }
             }
+          },
+          "value": {
+            "type": "string",
+            "description": "Текстовое содержимое текстового слоя"
+          },
+          "frame": {
+            "type": "object",
+            "description": "Область, в которую должен быть помещен текстовый слой",
+            "properties": {
+              "top": {
+                "$ref": "#/components/schemas/top"
+              },
+              "left": {
+                "$ref": "#/components/schemas/left"
+              },
+              "weight": {
+                "$ref": "#/components/schemas/weight"
+              },
+              "height": {
+                "$ref": "#/components/schemas/height"
+              },
+              "right": {
+                "$ref": "#/components/schemas/right"
+              },
+              "bottom": {
+                "$ref": "#/components/schemas/bottom"
+              }
+            },
+            "required": [
+              "top",
+              "left",
+              "weight",
+              "height",
+              "right",
+              "bottom"
+            ]
+          },
+          "boundsMode": {
+            "type": "string",
+            "enum": [
+              "auto",
+              "auto-height",
+              "fixed"
+            ],
+            "description": "Расположение текста внутри фрейма (изменение текстовой области в соответствии с границам фрейма):\n* auto: изменение границ фрейма по ширине, при вводе / удалении текста;\n* auto-height: изменение границ фрейма по высоте, при вводе / удалении текста;\n* fixed: фиксированные границы фрейма, независимо от введенного текста"
           }
-        }
+        },
+        "required": [
+          "value"
+        ]
       },
       "font": {
         "title": "font",
