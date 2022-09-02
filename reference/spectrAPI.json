@@ -1569,11 +1569,61 @@
           },
           "borderShape": {
             "$ref": "#/components/schemas/shape"
+          },
+          "layers": {
+            "type": "array",
+            "description": "Массив с описанием подслоев\n\n-- Объязательный параметр для слоя с типом layer.type: \"groupLayer\"",
+            "items": {
+              "$ref": "#/components/schemas/layer"
+            }
+          },
+          "artboard": {
+            "type": "object",
+            "properties": {
+              "bounds": {
+                "type": "object",
+                "properties": {
+                  "top": {
+                    "$ref": "#/components/schemas/top"
+                  },
+                  "left": {
+                    "$ref": "#/components/schemas/left"
+                  },
+                  "weight": {
+                    "$ref": "#/components/schemas/weight"
+                  },
+                  "height": {
+                    "$ref": "#/components/schemas/height"
+                  },
+                  "right": {
+                    "$ref": "#/components/schemas/right"
+                  },
+                  "bottom": {
+                    "$ref": "#/components/schemas/bottom"
+                  }
+                },
+                "required": [
+                  "top",
+                  "left",
+                  "weight",
+                  "height",
+                  "right",
+                  "bottom"
+                ]
+              },
+              "color": {
+                "$ref": "#/components/schemas/color"
+              },
+              "clipsContent": {
+                "type": "boolean"
+              }
+            }
           }
         },
         "required": [
           "id",
-          "type"
+          "type",
+          "layers"
         ]
       },
       "shape": {
