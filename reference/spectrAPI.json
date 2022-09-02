@@ -2009,6 +2009,137 @@
           "relativeTo",
           "type"
         ]
+      },
+      "text": {
+        "title": "text",
+        "x-stoplight": {
+          "id": "2jgc8ao3uw2wt"
+        },
+        "type": "object",
+        "description": "Дескриптор текста.\nВозвращается только для слоя с type: \"textLayer\"",
+        "properties": {
+          "styles": {
+            "type": "array",
+            "description": "Массив, содержащий диапазоны стилей шрифто. Массив приходит не пустой если помимо дефолтного стиля в текстовом слое используются еще другие стили",
+            "items": {
+              "type": "object",
+              "properties": {
+                "font": {
+                  "$ref": "#/components/schemas/font"
+                },
+                "color": {
+                  "$ref": "#/components/schemas/color"
+                },
+                "ranges": {
+                  "type": "array",
+                  "description": "Массив диапазонов стиля текста. Один диапазон - это пара индексов from и to в строке параметра text.value, диапазон представляет собой полуоткрытый интервал, значение в индексе to не является частью диапазона.",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "from": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "Начальный индекс диапазона"
+                      },
+                      "to": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "Конечный индекс диапазона"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "defaultStyle": {
+            "type": "object",
+            "description": "Стиль текста, который используется по умолчанию, когда диапазоны стилей в text.styles[] не охватывают определенный фрагмент текста. Каждый диапазон стилей шрифта в массиве text.styles[] переопределяет значение стиля по умолчанию.",
+            "properties": {
+              "color": {
+                "$ref": "#/components/schemas/color"
+              },
+              "font": {
+                "$ref": "#/components/schemas/font"
+              }
+            }
+          },
+          "transform": {
+            "type": "object",
+            "description": "Коэффициенты масштабирования изменения текста\n\n-- Не используем;\n-- Не возвращается для инструмента figma",
+            "properties": {
+              "scaleX": {
+                "type": "number",
+                "description": "Коэффициент масштабирования по оси X"
+              },
+              "scaleY": {
+                "type": "number",
+                "description": "Коэффициент масштабирования по оси Y"
+              }
+            },
+            "required": [
+              "scaleX",
+              "scaleY"
+            ]
+          },
+          "transformMatrix": {
+            "type": "object",
+            "description": "Матрица преобразования текст (отновительно документа)\n\n-- Не используем;\n-- Не возвращается для инструмента figma",
+            "required": [
+              "a",
+              "b",
+              "c",
+              "d",
+              "tx",
+              "ty"
+            ],
+            "properties": {
+              "a": {
+                "type": "number",
+                "format": "float",
+                "description": "Масштаб по горизонтали. Значение больше 1-го расширяет область паттерна, значение меньше 1-го, наоборот, уменьшает область"
+              },
+              "b": {
+                "type": "number",
+                "format": "float",
+                "description": "Наклон по горизонтали. Положительное значение наклоняет влево, отрицательное вправо."
+              },
+              "c": {
+                "type": "number",
+                "format": "float",
+                "description": "Наклон по вертикали. Положительное значение наклоняет вверх, отрицательное вниз."
+              },
+              "d": {
+                "type": "number",
+                "format": "float",
+                "description": "Масштаб по вертикали. Значение больше 1-го расширяет область паттерна, значение меньше 1-го, наоборот, уменьшает область"
+              },
+              "tx": {
+                "type": "number",
+                "format": "float",
+                "description": "Смещение по горизонтали. Положительное значение сдвигает элемент вправов, отрицательное значение сдвигает влево."
+              },
+              "ty": {
+                "type": "number",
+                "format": "float",
+                "description": "Смещение по вертикали. При положительном значении элемент смещается вниз или вверх при отрицательном значении"
+              }
+            }
+          }
+        }
+      },
+      "font": {
+        "title": "font",
+        "x-stoplight": {
+          "id": "grv9guvslns0y"
+        },
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          }
+        },
+        "description": "Дескриптор стиля текста"
       }
     },
     "parameters": {}
