@@ -34,7 +34,7 @@
         }
       ],
       "get": {
-        "summary": "Your GET endpoint",
+        "summary": "Design Artboard Content",
         "tags": [],
         "responses": {
           "200": {
