@@ -14,25 +14,8 @@
     }
   ],
   "paths": {
-    "/designs/{design_id}/artboards/{artboard_id}/content": {
-      "parameters": [
-        {
-          "schema": {
-            "type": "string"
-          },
-          "name": "design_id",
-          "in": "path",
-          "required": true
-        },
-        {
-          "schema": {
-            "type": "string"
-          },
-          "name": "artboard_id",
-          "in": "path",
-          "required": true
-        }
-      ],
+    "Design Artboard Content": {
+      "parameters": [],
       "get": {
         "summary": "Design Artboard Content",
         "tags": [],
