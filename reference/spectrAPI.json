@@ -1620,7 +1620,7 @@
           },
           "smartLayout": {
             "type": "string",
-            "description": "-- Возвращается только для слоя с типом layer.type: \"groupLayer\";\n-- Не используем. Не возвращается для инструмента figma",
+            "description": "Умная компоновка\n\n-- Возвращается только для слоя с типом layer.type: \"groupLayer\";\n-- Не используем. Не возвращается для инструмента figma",
             "enum": [
               "RIGHT_TO_LEFT",
               "HORIZONTAL_CENTER",
@@ -1628,7 +1628,8 @@
               "BOTTOM_TO_TOP",
               "HORIZONTAL_CENTER",
               "LEFT_TO_RIGHT"
-            ]
+            ],
+            "deprecated": true
           }
         },
         "required": [
