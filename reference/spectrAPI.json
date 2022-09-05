@@ -2265,12 +2265,57 @@
           "id": "grv9guvslns0y"
         },
         "type": "object",
+        "description": "Дескриптор стиля текста",
         "properties": {
-          "id": {
-            "type": "string"
+          "align": {
+            "type": "string",
+            "enum": [
+              "left",
+              "center",
+              "right",
+              "justify"
+            ],
+            "description": "Выравнивание текста по горизонтали:\n* left: выравнивание по левому краю;\n* right: по правому краю;\n* center: по центру;\n* justify по ширине: "
+          },
+          "name": {
+            "type": "string",
+            "description": "Общее название шрифта"
+          },
+          "type": {
+            "type": "string",
+            "description": "Тип шрифта (подсемейство)\n\n-- Для шрифтов из figma не возвращается"
+          },
+          "size": {
+            "type": "number",
+            "format": "float",
+            "description": "Размер шрифта"
+          },
+          "kerning": {
+            "type": "boolean",
+            "description": "Флаг, описывающий, включена ли в тексте функция кернинга:\n* true: включена;\n* false: отключена"
+          },
+          "letterSpacing": {
+            "type": "number",
+            "format": "float",
+            "description": "Интервал между буквами текста (может быть отрицательным)\n\n-- В figma значение представлено в процентах. Для этого необходимо значение из данного параметра разделить на значение из параметра size и умножить на 100"
+          },
+          "underline": {
+            "type": "number",
+            "enum": [
+              0,
+              1,
+              2
+            ],
+            "description": "Тип подчеркивания текста:\n* 0: без подчеркивания;\n* 1: подчеркивание снизу;\n* 2: двойное почеркивание (не используется для figma)"
+          },
+          "linethrough": {
+            "type": "boolean",
+            "description": "Флаг, указывающий, что текст зачеркнут;\n* true: зачеркнут;\n* false: зачеркивание отключено"
           }
         },
-        "description": "Дескриптор стиля текста"
+        "required": [
+          "size"
+        ]
       }
     },
     "parameters": {}
