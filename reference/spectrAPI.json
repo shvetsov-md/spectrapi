@@ -18,7 +18,9 @@
       "parameters": [],
       "get": {
         "summary": "Design Artboard Content",
-        "tags": [],
+        "tags": [
+          "octopus"
+        ],
         "responses": {
           "200": {
             "description": "OK",
