@@ -8,7 +8,7 @@ servers:
   - url: 'https://api.opendesign.dev'
     description: ''
 paths:
-  Design Artboard Content:
+  Design Artboard Content1:
     parameters: []
     get:
       summary: Design Artboard Content
