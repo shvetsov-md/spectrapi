@@ -8,10 +8,10 @@ servers:
   - url: 'https://api.opendesign.dev'
     description: ''
 paths:
-  Design Artboard Content1:
+  Design Artboard Content:
     parameters: []
     get:
-      summary: Design Artboard Content
+      summary: Design Artboard Content1
       tags:
         - octopus
       responses:
