@@ -1,17 +1,29 @@
 openapi: 3.0.0
 x-stoplight:
-  id: 34srq0gfduqk9
+  id: nzh6qkwu2km00
 info:
   title: spectrAPI
   version: '1.0'
 servers:
-  - url: 'https://api.opendesign.dev'
+  - url: 'https://ms-spectr-service-file-spectr.apps.okd.stage.digital.rt.ru/'
+    description: test
+  - url: ''
     description: ''
 paths:
-  Design Artboard Content:
-    parameters: []
+  '/designs/{design_id}/artboards/{artboard_id}/content':
+    parameters:
+      - schema:
+          type: string
+        name: design_id
+        in: path
+        required: true
+      - schema:
+          type: string
+        name: artboard_id
+        in: path
+        required: true
     get:
-      summary: Design Artboard Content1
+      summary: Design Artboard Content
       tags:
         - octopus
       responses:
@@ -154,7 +166,9 @@ paths:
                       - x
                       - 'y'
                   includeBackgroundColorInInstance:
-                    type: number
+                    type:
+                      - number
+                      - array
                     deprecated: true
                     default: 0
                     enum:
@@ -165,6 +179,7 @@ paths:
 
                       -- Не используем;
                       -- Не возвращается для фигмы
+                    items: {}
                   exportables:
                     type: array
                     description: |-
@@ -515,7 +530,7 @@ paths:
                     type: array
                     description: Слои фрейма
                     items:
-                      $ref: '#/components/schemas/layer'
+                      $ref: '#/components/schemas/layer(octopus)'
                 required:
                   - name
                   - id
@@ -535,17 +550,699 @@ paths:
           name: artboard_id
           required: true
           description: ИД фрейма в импортированном файле
+  '/api/pe/file/{fileId}/pages/':
+    post:
+      summary: Добавление страницы
+      operationId: post-api-gr-page-add
+      responses:
+        '200':
+          description: 'Сервер возвращает признак сохранения изменений по каждой странице, которые были переданы в запросе'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  pages:
+                    type: array
+                    description: Информация по сохранению изменений страницы
+                    items:
+                      $ref: '#/components/schemas/signSave'
+                required:
+                  - pages
+              examples: {}
+        ошибка:
+          $ref: '#/components/responses/error'
+      description: Добавление новой страницы в дизайн-файле
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                pages:
+                  type: array
+                  description: Информация по добавленным страницам
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        description: 'ИД страницы, сгенерированной на стороне клиента'
+                      name:
+                        type: string
+                        description: 'Название добавляемой страницы: "Page <количество страниц файла, не считая добавляемой + 1>"'
+                      number:
+                        type: number
+                        description: 'Порядковый номер новой страницы: <значение порядкового номера страницы, которая была активной перед добавление новой> + 1'
+                      sourcePageId:
+                        type: string
+                        description: 'Идентификатор страницы, копию которой планируется создать'
+                      backgroundCanvas:
+                        $ref: '#/components/schemas/color'
+                    required:
+                      - id
+                      - name
+                      - number
+                      - backgroundCanvas
+              required:
+                - pages
+            examples: {}
+        description: 'Клиент присылает список новых страниц, присвоение идентификатора происходит на клиенте'
+      tags:
+        - Редактор. Страницы
+      parameters:
+        - $ref: '#/components/parameters/SESSION'
+    parameters:
+      - $ref: '#/components/parameters/fileId'
+  '/api/pe/file/{fileId}/pages/status/{status}/':
+    post:
+      summary: Изменение статуса
+      operationId: post-api-gr-page-delete
+      responses:
+        '200':
+          description: 'Сервер возвращает признак сохранения изменений по каждой странице, которые были переданы в запросе'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  pages:
+                    type: array
+                    description: Информация по сохранению изменений страницы
+                    items:
+                      $ref: '#/components/schemas/signSave'
+                required:
+                  - pages
+        ошибка:
+          $ref: '#/components/responses/error'
+        '':
+          description: ''
+      description: Удаление страницы из дизайн-файла
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                pagesId:
+                  type: array
+                  description: ИД удаляемых страниц
+                  items:
+                    type: string
+              required:
+                - pagesId
+        description: ''
+      tags:
+        - Редактор. Страницы
+      parameters:
+        - $ref: '#/components/parameters/SESSION'
+    parameters:
+      - $ref: '#/components/parameters/fileId'
+      - schema:
+          type: string
+          enum:
+            - delete
+        name: status
+        in: path
+        required: true
+        description: Изменение статуса страницы
+  '/api/pe/file/{fileId}/pages/list/':
+    get:
+      summary: Получение актуального списка
+      operationId: get-api-gr-file-fileId-page-list
+      responses:
+        '200':
+          description: Сервер возвращает информацию по всем страницам дизайн-файла
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  pages:
+                    type: array
+                    description: Актуальный список страниц дизайн-файла
+                    items:
+                      $ref: '#/components/schemas/page'
+                required:
+                  - pages
+              examples: {}
+        ошибка:
+          $ref: '#/components/responses/error'
+        '':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  pages:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/page'
+      description: Получение актуального списка страниц из БД Спектр
+      tags:
+        - Редактор. Страницы
+      parameters:
+        - $ref: '#/components/parameters/SESSION'
+    parameters:
+      - $ref: '#/components/parameters/fileId'
+  '/api/pe/file/{fileId}/pages/names/':
+    post:
+      summary: Изменение наименования
+      operationId: post-api-shape
+      responses:
+        '200':
+          description: 'Сервер возвращает признак сохранения изменений по каждой странице, которые были переданы в запросе'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  pages:
+                    type: array
+                    description: Информация по сохранению изменений страницы
+                    items:
+                      $ref: '#/components/schemas/signSave'
+                required:
+                  - pages
+        ошибка:
+          $ref: '#/components/responses/error'
+      description: Изменение названия страницы
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                pages:
+                  type: array
+                  description: Новые наименования страниц
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        description: ИД страницы
+                      newName:
+                        type: string
+                        description: Новое название страницы
+                    required:
+                      - id
+                      - newName
+              required:
+                - pages
+        description: Клиент присылает список страниц с новыми наименованиями
+      tags:
+        - Редактор. Страницы
+      parameters:
+        - $ref: '#/components/parameters/SESSION'
+    parameters:
+      - $ref: '#/components/parameters/fileId'
+  '/api/pe/file/{fileId}/pages/numbers/':
+    post:
+      summary: Изменение порядкого номера
+      operationId: post-api-gr-page-changeNumber
+      responses:
+        '200':
+          description: 'Сервер возвращает признак сохранения изменений по каждой странице, которые были переданы в запросе'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  pages:
+                    type: array
+                    description: Информация по сохранению изменений страницы
+                    items:
+                      $ref: '#/components/schemas/signSave'
+                required:
+                  - pages
+        ошибка:
+          $ref: '#/components/responses/error'
+      tags:
+        - Редактор. Страницы
+      description: Изменение порядкого номера страниц
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                pages:
+                  type: array
+                  description: Новые порядковые номера страниц дизайн-файла
+                  items:
+                    $ref: '#/components/schemas/numberPages'
+              required:
+                - pages
+        description: ''
+      parameters:
+        - $ref: '#/components/parameters/SESSION'
+    parameters:
+      - $ref: '#/components/parameters/fileId'
+  /api/team/:
+    post:
+      summary: Создание команды
+      operationId: post-api-st-team
+      responses:
+        '200':
+          description: 'В ответе возвращаетя ИД созданной группы, который генерируется на строне сервера'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  teamId:
+                    type: string
+                    description: ИД созданной группы
+                required:
+                  - teamId
+        ошибка:
+          $ref: '#/components/responses/error'
+      description: Создание новой команды
+      parameters:
+        - $ref: '#/components/parameters/SESSION'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Наименование команды
+                description:
+                  type: string
+                  description: Описание организации
+                type:
+                  type: string
+                  description: Тип команды
+                  enum:
+                    - closed
+                    - openAll
+                    - openOrg
+                avatar:
+                  type: string
+                  description: ИД файла из ответа метода /api/st/team/image
+                organization:
+                  type: string
+                  description: ИД оргенизации
+                users:
+                  type: array
+                  description: Информация об участниках команды
+                  items:
+                    type: object
+                    properties:
+                      email:
+                        type: string
+                        description: Адрес электронной почты участника
+                      role:
+                        type: string
+                        description: Роль участника
+                        enum:
+                          - edit
+                          - view
+                    required:
+                      - email
+                      - role
+              required:
+                - name
+            examples: {}
+        description: 'Клиент передает на сервер информацию о новой команде, которую создает пользователь'
+      tags:
+        - ЛК. Команда
+    parameters: []
+  /api/team/image/:
+    parameters: []
+    post:
+      summary: Загрузка аватара
+      operationId: post-api-st-team-teamId-image
+      responses:
+        '200':
+          description: Сервер возвращает ИД сохраненого изображения в БД
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: ИД загруженного изображеия
+                  link:
+                    type: string
+                    description: Ссылка на аватар
+                required:
+                  - id
+                  - link
+      description: Загрузка аватара команды на сервер
+      parameters:
+        - schema: {}
+          in: query
+          name: image
+          description: 'Аватр команды (image/jpeg, image/jpg, image/png)'
+          required: true
+        - $ref: '#/components/parameters/SESSION'
+      tags:
+        - ЛК. Команда
+  '/api/team/{teamId}/collaborations/status/{status}/':
+    parameters:
+      - schema:
+          type: string
+        name: teamId
+        in: path
+        required: true
+        description: ИД команды
+      - schema:
+          type: string
+          enum:
+            - add
+            - delete
+            - change
+        name: status
+        in: path
+        required: true
+        description: Действие с участником
+    put:
+      summary: Управление участниками команды
+      operationId: post-api-st-team-teamId-c
+      responses:
+        '200':
+          description: Сервер возвращает актуальный список участников команды
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  users:
+                    type: array
+                    description: Актуальный список пользователей
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                          description: Имя участника
+                        email:
+                          type: string
+                          description: Адрес электронной почты
+                        role:
+                          type: string
+                          description: Роль участника
+                          enum:
+                            - edit
+                            - view
+                            - admin
+                        avatar:
+                          type: string
+                          description: ИД на аватар УЗ
+                        isPending:
+                          type: boolean
+                          description: |-
+                            Признак ожидания принятия приглашения на добавление в команду:
+                            * true: ожидает принятия приглашения;
+                            * false: приглашение принято
+                      required:
+                        - name
+                        - email
+                        - role
+                        - isPending
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                users:
+                  type: array
+                  description: Информация об участниках команды
+                  items:
+                    type: object
+                    properties:
+                      email:
+                        type: string
+                        description: Адрес электронной почты участника
+                      role:
+                        type: string
+                        description: Роль участника
+                        enum:
+                          - edit
+                          - view
+                          - admin
+                    required:
+                      - email
+              required:
+                - users
+        description: 'Клиен отправляет инфомацию по пользователю: email и роль'
+      description: Управление участниками команды и получение актуального списка участников
+      tags:
+        - ЛК. Команда
+      parameters:
+        - $ref: '#/components/parameters/SESSION'
+  /api/account/login/:
+    post:
+      summary: Авторизация по логину и паролю УЗ
+      operationId: post-api-account
+      responses:
+        '200':
+          description: Серевер возвращает ИД сессии пользователя в заголовках в параметре Set-Cookie
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+          headers:
+            Set-Cookie:
+              schema:
+                type: string
+              description: 'spectr.session={ИД сессии УЗ}'
+        ошибка:
+          $ref: '#/components/responses/error'
+        '':
+          headers:
+            Set-Cookie:
+              schema:
+                type: string
+      description: Авторизация по логину и паролю учетной записи пользователя
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                login:
+                  type: string
+                  description: Адрес электронной почты УЗ в качестве логина
+                password:
+                  type: string
+                  description: Пароль УЗ
+              required:
+                - login
+                - password
+        description: 'Клиент передает серверу email, в качестве логина, и пароль'
+      tags:
+        - Авторизация
+      parameters: []
+    parameters: []
+  /api/account/logout/:
+    post:
+      summary: Разавторизация
+      operationId: post-api-account-logout
+      responses:
+        '200':
+          description: 'Серевер удаяляет сессию УЗ, переданную в заголовках в параметре Set-Cookie'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        ошибка:
+          $ref: '#/components/responses/error'
+      description: Выход из профиля УЗ
+      tags:
+        - Авторизация
+      parameters:
+        - $ref: '#/components/parameters/SESSION'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+  '/api/pe/file/{fileId}/page/{pageId}/layers/status/{status}/':
+    parameters:
+      - $ref: '#/components/parameters/fileId'
+      - $ref: '#/components/parameters/pageId'
+      - schema:
+          type: string
+          enum:
+            - add
+            - change
+            - delete
+        name: status
+        in: path
+        required: true
+        description: Изменение статуса слоя
+    post:
+      summary: Управление слоями
+      operationId: post-api-pe-file-fileId-page-pageId-layers
+      responses:
+        '200':
+          description: 'Сервер возвращает признак сохранения изменений по каждому слою, которые были переданы в запросе'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  layers:
+                    type: array
+                    description: 'Признаки сохранения измений по слоям, переданным в запросе'
+                    items:
+                      $ref: '#/components/schemas/signSave'
+        ошибка:
+          $ref: '#/components/responses/error'
+      description: |-
+        Управление слоями в зависимости от переданного статуса в параметре пути status:
+        * add - добавление слоя, в БД Спектра для слоя проставляется стасус true (активный слой);
+        * change - изменение свояйств слоя;
+        * delete - удаление слоя, в БД для слоя проставялется статус false (архивный слой)
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                layers:
+                  type: array
+                  description: Информация по слоям
+                  items:
+                    $ref: '#/components/schemas/layer'
+              required:
+                - layers
+        description: 'Клиент передает список слоев, с которыми необходимо выполнить действия в зависимости от значеия в параметре пути status'
+      tags:
+        - Слои
+      parameters:
+        - $ref: '#/components/parameters/SESSION'
+  '/api/pe/file/{fileId}/page/{pageId}/layers/list/':
+    parameters:
+      - $ref: '#/components/parameters/fileId'
+      - $ref: '#/components/parameters/pageId'
+    get:
+      summary: Получение списка слоев
+      operationId: get-api-pe-file-fileId-page-pageId-layers-list
+      responses:
+        '200':
+          description: Серевер возвращает всю информацию по слоям на странице
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  layers:
+                    type: array
+                    description: Информация по всем слоям страницы
+                    items:
+                      $ref: '#/components/schemas/layer'
+                required:
+                  - layers
+        ошибка:
+          $ref: '#/components/responses/error'
+      description: 'Получения списка всех слоев на выбранной странице, ИД которой передан в параметре пути pageId'
+      parameters:
+        - $ref: '#/components/parameters/SESSION'
+      tags:
+        - Слои
+  '/api/pe/file/{fileId}/page/{pageId}/layers/{layerId}/':
+    parameters:
+      - $ref: '#/components/parameters/fileId'
+      - $ref: '#/components/parameters/pageId'
+      - $ref: '#/components/parameters/layerId'
+    get:
+      summary: Получение информации по слою
+      operationId: get-api-pe-file-fileId-page-pageId-layers-layerId
+      responses:
+        '200':
+          description: Сервер возвращает информацию по слою с ИД из параметра layerId
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/layer'
+        ошибка:
+          $ref: '#/components/responses/error'
+      description: 'Получение всей информации по слою, ИД которого передан в параметре пути layerId'
+      tags:
+        - Слои
+      parameters:
+        - $ref: '#/components/parameters/SESSION'
+  '/api/pe/file/{fileId}/pages/backgroundCanvas/':
+    parameters:
+      - $ref: '#/components/parameters/fileId'
+    post:
+      summary: Изменение настроек цвета фона Рабочей области
+      operationId: post-api-pe-file-pages-backgroundCanvas
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  pages:
+                    type: array
+                    description: Информация по сохранению изменений страницы
+                    items:
+                      $ref: '#/components/schemas/signSave'
+                required:
+                  - pages
+      tags:
+        - Редактор. Страницы
+      description: |-
+        Метод для изменение настроек цвета фона Рабочей области:
+        * цвет фона;
+        * не прозрачность фона;
+        * видимость фона
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                pages:
+                  type: array
+                  description: Новые настройки страниц
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        description: 'ИД страницы, для которой изменяются настройки цвета фона Рабочей област '
+                      backgroundCanvas:
+                        $ref: '#/components/schemas/color'
+                    required:
+                      - id
+                      - backgroundCanvas
+              required:
+                - pages
+        description: Клиент передает новые значения настроек фона Рабочей области
+  /123:
+    post:
+      summary: ''
+      operationId: post-123
+      responses:
+        '200':
+          description: OK
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                '123':
+                  oneOf:
+                    - {}
+                  type: object
 components:
   schemas:
-    top:
-      type: number
-      title: top
-      x-stoplight:
-        id: oet4m14nzd64s
-      description: Верхняя граница (X)
-      format: float
-      default: 0
-      example: 9.99
     bottom:
       type: number
       title: bottom
@@ -555,6 +1252,15 @@ components:
       default: 0
       example: 9.99
       description: Нижняя граница (top + height)
+    top:
+      type: number
+      title: top
+      x-stoplight:
+        id: oet4m14nzd64s
+      description: Верхняя граница (X)
+      format: float
+      default: 0
+      example: 9.99
     left:
       type: number
       title: left
@@ -591,7 +1297,7 @@ components:
       format: float
       default: 0
       example: 9.99
-    color:
+    color(octopus):
       title: color
       x-stoplight:
         id: ego30so2z2daw
@@ -641,8 +1347,8 @@ components:
         - g
         - b
         - a
-    layer:
-      title: layer
+    layer(octopus):
+      title: layer(octopus)
       x-stoplight:
         id: vf3nbwzn5q7qh
       type: object
@@ -1436,7 +2142,7 @@ components:
 
             -- Объязательный параметр для слоя с типом layer.type: "groupLayer"
           items:
-            $ref: '#/components/schemas/layer'
+            $ref: '#/components/schemas/layer(octopus)'
         artboard:
           type: object
           description: |-
@@ -2252,4 +2958,390 @@ components:
       required:
         - size
         - postScriptName
-  parameters: {}
+    error:
+      title: error
+      x-stoplight:
+        id: fhhyw1f78ckxn
+      type: object
+      description: Параметры ошибки
+      properties:
+        errorCode:
+          type: number
+          description: Код ошибки
+        errorText:
+          type: string
+          description: Текст с описанием ошибки для пользователя
+      required:
+        - errorCode
+    numberPages:
+      title: numberPages
+      x-stoplight:
+        id: p1e5b8rxqfnyh
+      type: object
+      description: Изменение порядкового номера текущих страниц файла
+      x-internal: false
+      properties:
+        id:
+          type: string
+          description: ИД текущей страницы
+        newNumber:
+          type: number
+          description: Новый порядковый номер текущей страницы
+      required:
+        - id
+        - newNumber
+    signSave:
+      title: signSave
+      x-stoplight:
+        id: 3n4iafv051806
+      type: object
+      description: Признак сохранения изменений по странице
+      properties:
+        id:
+          type: string
+          description: 'ИД страницы '
+        error:
+          $ref: '#/components/schemas/error'
+      required:
+        - id
+    page:
+      title: page
+      x-stoplight:
+        id: 5uh0t4l8k5jul
+      type: object
+      description: Информация по странице
+      properties:
+        id:
+          type: string
+          description: ИД страницы
+        name:
+          type: string
+          description: Наименование страницы
+        number:
+          type: string
+          description: Номер страницы
+        backgroundCanvas:
+          $ref: '#/components/schemas/color'
+      required:
+        - id
+        - name
+        - number
+        - backgroundCanvas
+    layer:
+      title: layer
+      x-stoplight:
+        id: z0xzlw4prybqn
+      type: object
+      description: Содержимое слоя
+      properties:
+        id:
+          type: string
+          description: ИД слоя (генерируется на строне клиента)
+        name:
+          type: string
+          description: Наименование слоя
+        type:
+          type: string
+          description: Тип слоя
+          enum:
+            - shape
+            - frame
+            - group
+            - component
+            - text
+            - pen
+        shape:
+          type: string
+          description: |-
+            Векторная форма.
+
+            Параметр возвращается, если type: "shape"
+          enum:
+            - rectangle
+            - line
+            - arrow
+            - ellipse
+            - polygon
+            - star
+        position:
+          type: object
+          description: 'Положение слоя на Рабочей области вдоль любой их двух осей: горизонтальной (ось X) и вертикальной (ось Y)'
+          required:
+            - x
+            - 'y'
+          properties:
+            x:
+              type: number
+              description: Положение по оси X (горизонтальное)
+              format: float
+              default: 0
+              example: '9,99'
+            'y':
+              type: number
+              description: Положение по оси Y (вертикальное)
+              format: float
+              default: 0
+              example: '9,99'
+        dimensions:
+          type: object
+          description: Размеры слоя
+          required:
+            - width
+            - height
+          properties:
+            width:
+              type: number
+              format: float
+              default: 0
+              example: '9,99'
+              description: Ширина
+            height:
+              type: number
+              format: float
+              default: 0
+              example: '9,99'
+              description: Высота
+        rotation:
+          type: number
+          description: Угол поворота слоя в градусах
+          format: float
+          default: 0
+          example: '9,99'
+        cornerRadius:
+          type: object
+          description: Радиус скругления угла
+          properties:
+            totalCorner:
+              type: number
+              description: Общий радиус углов
+              format: float
+              default: 0
+              example: '9,99'
+            independentCorners:
+              type: object
+              description: Отдельные радиусы углов
+              properties:
+                topLeft:
+                  type: number
+                  description: Радиус верхнего левого угла
+                  format: float
+                  default: 0
+                  example: '9,99'
+                topRight:
+                  type: number
+                  description: Радиус верхнего правого угла
+                  format: float
+                  default: 0
+                  example: '9,99'
+                bottomRight:
+                  type: number
+                  description: Радиус нижнего правого угла
+                  format: float
+                  default: 0
+                  example: '9,99'
+                bottomLeft:
+                  type: number
+                  description: Радиус левого нижнего угла
+                  format: float
+                  default: 0
+                  example: '9,99'
+              required:
+                - topLeft
+                - topRight
+                - bottomRight
+                - bottomLeft
+        fill:
+          type: object
+          description: Информация по заливке слоя
+          properties:
+            colorStyle:
+              $ref: '#/components/schemas/colorStyle'
+            fillLayers:
+              type: array
+              description: Слои заливки
+              items:
+                $ref: '#/components/schemas/color'
+          required:
+            - colorStyle
+            - fillLayers
+        stroke:
+          type: object
+          properties:
+            strokeLayers:
+              type: array
+              description: Слои обводки
+              items:
+                $ref: '#/components/schemas/color'
+            colorStyle:
+              $ref: '#/components/schemas/colorStyle'
+            settings:
+              type: object
+              default: true
+              description: Настройки обводки
+          required:
+            - strokeLayers
+            - colorStyle
+            - settings
+        addPropertiesShape:
+          type: object
+          description: 'Дополнительные свойства основных векторных форм (type: "shape")'
+          properties:
+            countPoint:
+              type: number
+              description: |-
+                Количечтво вершин формы внутри слоя
+
+                Возвращается если параметр shape: "polygon / star"
+              default: 5
+              example: 5
+            ratio:
+              type: number
+              format: float
+              default: '38,2'
+              example: '38,2'
+              description: |-
+                Расстояние внутренних точек звезды от центра
+
+                Возвращается если параметр shape: "star"
+        points:
+          type: array
+          description: Описание точек пути
+          items:
+            type: object
+            properties:
+              type:
+                type: string
+                description: |-
+                  Тип точки:
+                  * point: простая точка;
+                  * bezier: кривая Безье
+                enum:
+                  - point
+                  - bezier
+              coordinates:
+                type: array
+                description: |-
+                  Массив координат точки.
+
+                  Если точка имеет тип <b>bezier</b>, координаты возвращаются как [c1.x, c1.y, c2.x, c2.y, p.x, p.y], где p - точка на кривой, а c1 и c2 - ее соседние контрольные точки. Для типа <b>point</b> - [p.x, p.y].
+                items:
+                  type: number
+            required:
+              - type
+              - coordinates
+        layers:
+          type: array
+          description: ИД вложенных слоев
+          items:
+            type: string
+        number:
+          type: string
+          description: Порядковый номер слоя
+      required:
+        - id
+        - name
+        - type
+        - position
+        - dimensions
+        - rotation
+        - cornerRadius
+        - points
+        - number
+    color:
+      title: color
+      x-stoplight:
+        id: yxfvzbdu6rqlh
+      type: object
+      description: Свойства цвета слоя или Рабочей области
+      properties:
+        color:
+          type: string
+          description: Значение цвета в формате HEX-кода
+        opacity:
+          type: number
+          format: float
+          default: 100
+          example: '60,99'
+          description: Непрозрачность (в процентах)
+        visible:
+          type: boolean
+          default: true
+          description: |-
+            Признак видимости:
+            * true: стиль отображается;
+            * false: стиль скрыт
+        numberLayerColor:
+          type: number
+          description: Порядковый номер цветового стиля
+          default: 1
+    colorStyle:
+      title: colorStyle
+      x-stoplight:
+        id: ip3n7g0pwy55y
+      type: object
+      description: Стиль сохраненного цвета
+      properties:
+        id:
+          type: string
+          description: ИД стиля
+        name:
+          type: string
+          description: Наименование стиля
+        color:
+          type: string
+          description: Значение цвета в формате HEX-кода
+      required:
+        - id
+        - name
+        - color
+  parameters:
+    SESSION:
+      name: spectr.session
+      in: cookie
+      required: true
+      schema:
+        type: string
+      description: ИД сессии пользователя
+    Authorization:
+      name: Authorization
+      in: header
+      required: true
+      schema:
+        type: string
+      description: 'Bearer {access token полученный в SSO Keycloack}'
+    fileId:
+      name: fileId
+      in: path
+      required: true
+      schema:
+        type: string
+      description: ИД файла
+    pageId:
+      name: pageId
+      in: path
+      required: true
+      schema:
+        type: string
+      description: ИД страницы
+    layerId:
+      name: layerId
+      in: path
+      required: true
+      schema:
+        type: string
+      description: ИД слоя
+    team:
+      name: team
+      in: path
+      schema:
+        type: string
+      description: ИД команды
+  securitySchemes: {}
+  responses:
+    error:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+  examples: {}
