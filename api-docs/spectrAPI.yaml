@@ -5,8 +5,6 @@ info:
   title: spectrAPI
   version: '1.0'
 servers:
-  - url: 'https://ms-spectr-service-file-spectr.apps.okd.stage.digital.rt.ru/'
-    description: test
   - url: ''
     description: ''
 paths:
