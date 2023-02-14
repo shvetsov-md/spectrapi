@@ -1224,23 +1224,6 @@ paths:
               required:
                 - pages
         description: Клиент передает новые значения настроек фона Рабочей области
-  /123:
-    post:
-      summary: ''
-      operationId: post-123
-      responses:
-        '200':
-          description: OK
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                '123':
-                  oneOf:
-                    - {}
-                  type: object
 components:
   schemas:
     bottom:
